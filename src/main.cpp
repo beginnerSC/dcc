@@ -1,3 +1,4 @@
+#include <iostream>
 #include <pybind11/pybind11.h>
 
 std::string hello_from_bin() { return "Hello from dcc!"; }
@@ -12,6 +13,26 @@ PYBIND11_MODULE(_core, m) {
   )pbdoc");
 }
 
+class vector{
+  int *a;
+  size_t size;
+public: 
+  vector(size_t size) : size(size) {
+    a = new int[size];
+  }
+  ~vector() { delete [] a; }
+  void print() {
+    for (size_t i=0 ; i<size ; i++)
+    {
+      std::cout << a[i] << ", ";
+    }
+  }
+};
+
 int main() {
-    return 0;
+  vector v(5);
+
+  v.print();
+
+  return 0;
 }
