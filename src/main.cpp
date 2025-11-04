@@ -14,20 +14,25 @@
 // }
 
 class vector{
-  int *a;
-  size_t size = 0;
-  size_t capacity = 10;
+  int *a = nullptr;
+  size_t size_ = 0;
+  size_t capacity_ = 10;
 public: 
-  vector(size_t size) : size(size) {
-    a = new int[size];
-    for (size_t i=0 ; i<size ; ++i)
-    {
-      a[i] = 0;
-    }
+  vector(size_t size) : size_(size) {
+    a = initialized_array(capacity_);
   }
   ~vector() { delete [] a; }
+
+  int* initialized_array(size_t capacity){
+    int *res = new int[capacity];
+    for (size_t i=0 ; i<capacity ; ++i)
+    {
+      res[i] = 0;
+    }
+    return res;
+  }
   void print() {
-    for (size_t i=0 ; i<size ; i++)
+    for (size_t i=0 ; i<size_ ; i++)
     {
       std::cout << a[i] << ", ";
     }
@@ -35,12 +40,19 @@ public:
   }
   void push_back(const int& val)
   {
-    if (size == capacity)
+    if (size_ == capacity_)
     {
-      capacity *= 2;
+      capacity_ *= 2;
+      int *tmp = initialized_array(capacity_);
+      for (size_t i=0 ; i<size_ ; i++)
+      {
+        tmp[i] = a[i];
+      }
+      delete [] a;
+      a = tmp;
     }
-    a[size] = val;
-    ++size;
+    a[size_] = val;
+    ++size_;
   }
 };
 
