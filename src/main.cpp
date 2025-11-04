@@ -19,11 +19,11 @@ class vector{
   size_t capacity_ = 10;
 public: 
   vector(size_t size) : size_(size) {
-    a = initialized_array(capacity_);
+    a = get_initialized_array(capacity_);
   }
   ~vector() { delete [] a; }
 
-  int* initialized_array(size_t capacity){
+  int* get_initialized_array(size_t capacity){
     int *res = new int[capacity];
     for (size_t i=0 ; i<capacity ; ++i)
     {
@@ -43,7 +43,7 @@ public:
     if (size_ == capacity_)
     {
       capacity_ *= 2;
-      int *tmp = initialized_array(capacity_);
+      int *tmp = get_initialized_array(capacity_);
       for (size_t i=0 ; i<size_ ; i++)
       {
         tmp[i] = a[i];
@@ -53,6 +53,11 @@ public:
     }
     a[size_] = val;
     ++size_;
+  }
+
+  int& operator[](size_t i)
+  {
+    return a[i];
   }
 };
 
@@ -67,6 +72,11 @@ int main() {
     v.push_back(i);
   }
 
+  v.print();
+
+  std::cout << v[1] << ", " << v[7] << ", " << std::endl;
+
+  v[3] = 10;
   v.print();
 
   return 0;
