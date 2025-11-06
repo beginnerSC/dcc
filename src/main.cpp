@@ -57,7 +57,7 @@ public:
 
   int& operator[](size_t i)
   {
-    return a[i];
+    return a[i]; 
   }
 };
 
