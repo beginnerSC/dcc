@@ -64,7 +64,7 @@ public:
   {
     return size_;
   }
-  vector operator=(const vector& other)
+  vector& operator=(const vector& other)
   {
     if (this != &other){
       delete [] a;
@@ -111,7 +111,7 @@ int main() {
   vector u;
   
   u = v;
-
+  u[3] = 20;
   u.print();
 
   return 0;
