@@ -11,6 +11,7 @@
         "program": "${workspaceFolder}/build/Debug/_core_exe.exe",
         // "args": [],
         "stopAtEntry": false,
+        // "preLaunchTask": "CMake: config and build",
         "preLaunchTask": "CMake: build",
         "cwd": "${workspaceFolder}",
         // "environment": [],
