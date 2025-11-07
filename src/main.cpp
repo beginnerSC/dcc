@@ -111,7 +111,7 @@ int main() {
   vector u;
   
   u = v;
-  u[3] = 20;
+  u[3] = 20; 
   u.print();
 
   return 0;
