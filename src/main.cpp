@@ -18,6 +18,7 @@ class vector{
   size_t size_ = 0;
   size_t capacity_ = 10;
 public: 
+  vector() {}
   vector(size_t size) : size_(size) {
     a = get_initialized_array(capacity_);
   }
@@ -55,7 +56,35 @@ public:
     ++size_;
   }
 
+  const int& get_capacity() const
+  {
+    return capacity_;
+  }
+  const int& size() const 
+  {
+    return size_;
+  }
+  vector operator=(const vector& other)
+  {
+    if (this != &other){
+      delete [] a;
+      size_ = other.size();
+      capacity_ = other.get_capacity();
+      a = get_initialized_array(capacity_);
+      for (size_t i=0 ; i<size_ ; ++i)
+      {
+        a[i] = other[i];
+      }
+    }
+    return *this;
+  }
+
   int& operator[](size_t i)
+  {
+    return a[i]; 
+  }
+
+  const int& operator[](size_t i) const
   {
     return a[i]; 
   }
@@ -78,6 +107,12 @@ int main() {
 
   v[3] = 10;
   v.print();
+
+  vector u;
+  
+  u = v;
+
+  u.print();
 
   return 0;
 }
