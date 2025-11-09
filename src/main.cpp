@@ -14,15 +14,9 @@
 // }
 
 class vector{
-  int *a = nullptr;
+  int *a_ = nullptr;
   size_t size_ = 0;
   size_t capacity_ = 10;
-public: 
-  vector() {}
-  vector(size_t size) : size_(size) {
-    a = get_initialized_array(capacity_);
-  }
-  ~vector() { delete [] a; }
 
   int* get_initialized_array(size_t capacity){
     int *res = new int[capacity];
@@ -32,10 +26,18 @@ public:
     }
     return res;
   }
+
+public: 
+  vector() {}
+  vector(size_t size) : size_(size) {
+    a_ = get_initialized_array(capacity_);
+  }
+  ~vector() { delete [] a_; }
+
   void print() {
     for (size_t i=0 ; i<size_ ; i++)
     {
-      std::cout << a[i] << ", ";
+      std::cout << a_[i] << ", ";
     }
     std::cout << std::endl;
   }
@@ -47,16 +49,33 @@ public:
       int *tmp = get_initialized_array(capacity_);
       for (size_t i=0 ; i<size_ ; i++)
       {
-        tmp[i] = a[i];
+        tmp[i] = a_[i];
       }
-      delete [] a;
-      a = tmp;
+      delete [] a_;
+      a_ = tmp;
     }
-    a[size_] = val;
+    a_[size_] = val;
     ++size_;
   }
 
-  const int& get_capacity() const
+  void resize(const size_t& size)
+  {
+    if (size < capacity_) {
+      size_ = size;
+    } else {
+      do {
+        capacity_ *= 2; 
+      } while (capacity_ < size);
+      int* tmp = get_initialized_array(capacity_);
+      for (size_t i=0 ; i<size_ ; ++i){
+        tmp[i] = a_[i];
+      }
+      delete [] a_;
+      a_ = tmp;
+      size_ = size;
+    }
+  }
+  const int& capacity() const
   {
     return capacity_;
   }
@@ -67,13 +86,13 @@ public:
   vector& operator=(const vector& other)
   {
     if (this != &other){
-      delete [] a;
+      delete [] a_;
       size_ = other.size();
-      capacity_ = other.get_capacity();
-      a = get_initialized_array(capacity_);
+      capacity_ = other.capacity();
+      a_ = get_initialized_array(capacity_);
       for (size_t i=0 ; i<size_ ; ++i)
       {
-        a[i] = other[i];
+        a_[i] = other[i];
       }
     }
     return *this;
@@ -81,12 +100,12 @@ public:
 
   int& operator[](size_t i)
   {
-    return a[i]; 
+    return a_[i]; 
   }
 
   const int& operator[](size_t i) const
   {
-    return a[i]; 
+    return a_[i]; 
   }
 };
 
@@ -108,11 +127,22 @@ int main() {
   v[3] = 10;
   v.print();
 
+  std::cout << "copy ctor: " << std::endl;
   vector u;
   
   u = v;
   u[3] = 20; 
   u.print();
+
+  std::cout << "resize: " << std::endl;
+  v.resize(20);
+  v.print();
+
+  v.resize(5);
+  v.print();
+
+  v.resize(40);
+  v.print();
 
   return 0;
 }
