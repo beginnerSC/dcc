@@ -146,3 +146,20 @@ int main() {
 
   return 0;
 }
+
+class Point{
+  double x_, y_;
+  double step_size_ = 0.01;
+  Point* target_;
+public:
+  Point(const double& x, const double& y): x_(x), y_(y) {}
+  void Step(){
+
+  }
+  void SetStepSize(const double& step_size) {
+    step_size_ = step_size;
+  }
+  void SetTarget(Point* target){
+    target_ = target;
+  }
+};
