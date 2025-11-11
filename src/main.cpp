@@ -160,6 +160,6 @@ public:
     step_size_ = step_size;
   }
   void SetTarget(Point* target){
-    target_ = target;
+    target_ = target; 
   }
 };
