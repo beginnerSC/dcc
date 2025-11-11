@@ -1,5 +1,6 @@
 #include <iostream>
 #include <pybind11/pybind11.h>
+#include <vector>
 
 // std::string hello_from_bin() { return "Hello from dcc!"; }
 
@@ -109,6 +110,20 @@ public:
   }
 };
 
+void rangesExample(){
+
+  std::vector<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  auto processed_numbers = numbers 
+                          | std::views::filter([](int n){ return n % 2 == 0; }) 
+                          | std::views::transform([](int n){ return n * 2; });
+  // processed_numbers now represents a view of {4, 8, 12, 16, 20}
+
+  for (const int& n : processed_numbers)
+    std::cout << n << ", ";
+
+  std::cout << std::endl << std::endl;
+}
+
 int main() {
   size_t size = 3;
   vector v(size);
@@ -141,8 +156,8 @@ int main() {
   v.resize(5);
   v.print();
 
-  v.resize(40);
-  v.print();
+  // v.resize(40);
+  // v.print();
 
   return 0;
 }
