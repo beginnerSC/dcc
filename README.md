@@ -19,3 +19,4 @@ pybind11_add_module(_core MODULE src/main.cpp)
 install(TARGETS _core DESTINATION dcc)
 ```
 * Run `git clean -ffdx -e .venv` to wipe out everything except the venv
+* Run `cmake --build ./build --config Debug --target ALL_BUILD -j 12 --verbose` to build and see log

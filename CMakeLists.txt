@@ -19,3 +19,6 @@ add_executable(_core_exe    # build an executable to debug; one must specify a m
 )
 
 target_link_libraries(_core_exe PRIVATE pybind11::module)
+
+# Force C++20: Needed for old compilers. This will be ignored by new compilers
+target_compile_options(_core_exe PRIVATE /std::c++latest)

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <pybind11/pybind11.h>
 #include <vector>
+#include <ranges>
+#include <cmath>
 
 // std::string hello_from_bin() { return "Hello from dcc!"; }
 
@@ -124,7 +126,7 @@ void RangesExample(){
   std::cout << std::endl << std::endl;
 }
 
-int main() {
+int main0() {
   size_t size = 3;
   vector v(size);
 
@@ -156,8 +158,8 @@ int main() {
   v.resize(5);
   v.print();
 
-  // v.resize(40);
-  // v.print();
+  v.resize(40);
+  v.print();
 
   return 0;
 }
@@ -169,7 +171,24 @@ class Point{
 public:
   Point(const double& x, const double& y): x_(x), y_(y) {}
   void Step(){
-
+    const std::pair<double, double> target_coordinates = target_->GetCoordinates();
+    const double& tx = target_coordinates.first, 
+                  ty = target_coordinates.second; 
+    const double scale = step_size_/Distance(target_);
+    x_ += scale*(tx-x_);
+    y_ += scale*(ty-y_);
+  }
+  void Print() {
+    std::cout << "(" << x_ << ", " << y_ << ")" << std::endl;
+  }
+  const double Distance(const Point* p) const {
+    const std::pair<double, double> p_coordinates = p->GetCoordinates();
+    const double& px = p_coordinates.first, 
+                  py = p_coordinates.second; 
+    return std::hypot(px-x_, py-y_);   // also from cmath, claimed to be more numerically stable than std::sqrt(x*x + y*y)
+  }
+  const std::pair<double, double> GetCoordinates() const {
+    return std::pair<double, double> {x_, y_};
   }
   void SetStepSize(const double& step_size) {
     step_size_ = step_size;
@@ -178,3 +197,23 @@ public:
     target_ = target; 
   }
 };
+
+int main() {
+  Point A(0, 0), B(0, 1), C(1, 1), D(1, 0);
+
+  A.SetTarget(&B);
+  B.SetTarget(&C);
+  C.SetTarget(&D);
+  D.SetTarget(&A);
+
+  for (size_t i=0 ; i<1000 ; ++i) {
+    A.Step();
+    B.Step();
+    C.Step();
+    D.Step();
+
+    A.Print();
+  }
+
+  return 0;  
+}
