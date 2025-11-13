@@ -1,6 +1,7 @@
 #include <iostream>
 #include <pybind11/pybind11.h>
 #include <vector>
+#include <utility>
 #include <ranges>
 #include <cmath>
 
@@ -168,6 +169,8 @@ class Point{
   double x_, y_;
   double step_size_ = 0.01;
   Point* target_;
+  std::vector<double> pursuit_curve_x_ = {}, 
+                      pursuit_curve_y_ = {}; 
 public:
   Point(const double& x, const double& y): x_(x), y_(y) {}
   void Step(){
@@ -177,6 +180,9 @@ public:
     const double scale = step_size_/Distance(target_);
     x_ += scale*(tx-x_);
     y_ += scale*(ty-y_);
+
+    pursuit_curve_x_.push_back(x_);
+    pursuit_curve_y_.push_back(y_);
   }
   void Print() {
     std::cout << "(" << x_ << ", " << y_ << ")" << std::endl;
@@ -196,6 +202,9 @@ public:
   void SetTarget(Point* target){
     target_ = target; 
   }
+  std::pair<const std::vector<double>&, const std::vector<double>&> GetPursuitCurve() const noexcept {
+    return {pursuit_curve_x_, pursuit_curve_y_};
+  }
 };
 
 int main() {
@@ -211,8 +220,16 @@ int main() {
     B.Step();
     C.Step();
     D.Step();
+  }
+  auto [ax, ay] = A.GetPursuitCurve();
 
-    A.Print();
+  for (const double& x : ax){
+    std::cout << x << ", ";
+  }
+  std::cout << std::endl;
+  
+  for (const double& y : ay){
+    std::cout << y << ", ";
   }
 
   return 0;  
