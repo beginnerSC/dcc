@@ -174,9 +174,7 @@ class Point{
 public:
   Point(const double& x, const double& y): x_(x), y_(y) {}
   void Step(){
-    const std::pair<double, double> target_coordinates = target_->GetCoordinates();
-    const double& tx = target_coordinates.first, 
-                  ty = target_coordinates.second; 
+    auto [tx, ty] = target_->GetCoordinates();
     const double scale = step_size_/Distance(target_);
     x_ += scale*(tx-x_);
     y_ += scale*(ty-y_);
@@ -184,26 +182,21 @@ public:
     pursuit_curve_x_.push_back(x_);
     pursuit_curve_y_.push_back(y_);
   }
-  void Print() {
-    std::cout << "(" << x_ << ", " << y_ << ")" << std::endl;
-  }
   const double Distance(const Point* p) const {
-    const std::pair<double, double> p_coordinates = p->GetCoordinates();
-    const double& px = p_coordinates.first, 
-                  py = p_coordinates.second; 
+    auto [px, py] = p->GetCoordinates(); 
     return std::hypot(px-x_, py-y_);   // also from cmath, claimed to be more numerically stable than std::sqrt(x*x + y*y)
   }
+  std::pair<const std::vector<double>&, const std::vector<double>&> GetPursuitCurve() const noexcept {
+    return {pursuit_curve_x_, pursuit_curve_y_};
+  }
   const std::pair<double, double> GetCoordinates() const {
-    return std::pair<double, double> {x_, y_};
+    return {x_, y_};
   }
   void SetStepSize(const double& step_size) {
     step_size_ = step_size;
   }
   void SetTarget(Point* target){
     target_ = target; 
-  }
-  std::pair<const std::vector<double>&, const std::vector<double>&> GetPursuitCurve() const noexcept {
-    return {pursuit_curve_x_, pursuit_curve_y_};
   }
 };
 
