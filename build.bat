@@ -1,4 +1,4 @@
-@REM uv sync
-@REM uv build
+uv sync
+uv build
 cmake -S . -B build
 cmake --build build

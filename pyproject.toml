@@ -8,6 +8,8 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "jupyterlab>=4.4.10",
+    "matplotlib>=3.10.7",
     "pre-commit>=4.3.0",
     "pybind11>=2.6.0",
 ]
