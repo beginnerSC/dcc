@@ -62,12 +62,12 @@ PYBIND11_MODULE(_core, m) {
     .def("SetStepSize",     &Point::SetStepSize);
 }
 
-class vector{
+class Vector{
   int *a_ = nullptr;
   size_t size_ = 0;
   size_t capacity_ = 10;
 
-  int* get_initialized_array(size_t capacity){
+  int* GetInitializedArray(size_t capacity){
     int *res = new int[capacity];
     for (size_t i=0 ; i<capacity ; ++i)
     {
@@ -77,25 +77,53 @@ class vector{
   }
 
 public: 
-  vector() {}
-  vector(size_t size) : size_(size) {
-    a_ = get_initialized_array(capacity_);
+  Vector() {}
+  Vector(size_t size) : size_(size) {
+    a_ = GetInitializedArray(capacity_);
   }
-  ~vector() { delete [] a_; }
+  ~Vector() { delete [] a_; }
 
-  void print() {
+  class iterator{
+    int *ptr_ = nullptr;
+  public: 
+    iterator(int* ptr): ptr_(ptr) {}
+    int operator*()
+    {
+
+    }
+// Dereferencing (* operator): Return the value at the current position
+// Arrow operator (-> operator): For accessing members (less relevant for int, but good practice)
+// Pre-increment (++it): Move to the next element and return the iterator
+// Post-increment (it++): Move to the next element but return the old position
+// Equality comparison (==): Check if two iterators point to the same position
+// Inequality comparison (!=): Check if two iterators point to different positions
+  };
+
+  iterator begin(){}
+  iterator end(){}
+
+// begin(): Should return an iterator pointing to the first element (i.e., a_)
+// end(): Should return an iterator pointing to one-past-the-last element (i.e., a_ + size_)
+
+// client code
+// std::vector<int> v = {1, 2, 3};
+// for (auto it = v.begin(); it != v.end(); ++it) {
+//     std::cout << *it << std::endl;
+// }
+
+  void Print() {
     for (size_t i=0 ; i<size_ ; i++)
     {
       std::cout << a_[i] << ", ";
     }
     std::cout << std::endl;
   }
-  void push_back(const int& val)
+  void PushBack(const int& val)
   {
     if (size_ == capacity_)
     {
       capacity_ *= 2;
-      int *tmp = get_initialized_array(capacity_);
+      int *tmp = GetInitializedArray(capacity_);
       for (size_t i=0 ; i<size_ ; i++)
       {
         tmp[i] = a_[i];
@@ -115,7 +143,7 @@ public:
       do {
         capacity_ *= 2; 
       } while (capacity_ < size);
-      int* tmp = get_initialized_array(capacity_);
+      int* tmp = GetInitializedArray(capacity_);
       for (size_t i=0 ; i<size_ ; ++i){
         tmp[i] = a_[i];
       }
@@ -124,21 +152,21 @@ public:
       size_ = size;
     }
   }
-  size_t capacity() const noexcept
+  size_t GetCapacity() const noexcept
   {
     return capacity_;
   }
-  size_t size() const noexcept
+  size_t GetSize() const noexcept
   {
     return size_;
   }
-  vector& operator=(const vector& other)
+  Vector& operator=(const Vector& other)
   {
     if (this != &other){
       delete [] a_;
-      size_ = other.size();
-      capacity_ = other.capacity();
-      a_ = get_initialized_array(capacity_);
+      size_ = other.GetSize();
+      capacity_ = other.GetCapacity();
+      a_ = GetInitializedArray(capacity_);
       for (size_t i=0 ; i<size_ ; ++i)
       {
         a_[i] = other[i];
@@ -147,12 +175,11 @@ public:
     return *this;
   }
 
-  int& operator[](size_t i)
+  int& operator[](size_t i) noexcept
   {
     return a_[i]; 
   }
-
-  const int& operator[](size_t i) const
+  const int& operator[](size_t i) const noexcept
   {
     return a_[i]; 
   }
@@ -174,38 +201,38 @@ void RangesExample(){
 
 int main0() {
   size_t size = 3;
-  vector v(size);
+  Vector v(size);
 
-  v.print();
+  v.Print();
 
   for (int i=0 ; i<2*size ; ++i)
   {
-    v.push_back(i);
+    v.PushBack(i);
   }
 
-  v.print();
+  v.Print();
 
   std::cout << v[1] << ", " << v[7] << ", " << std::endl;
 
   v[3] = 10;
-  v.print();
+  v.Print();
 
   std::cout << "copy ctor: " << std::endl;
-  vector u;
+  Vector u;
   
   u = v;
   u[3] = 20; 
-  u.print();
+  u.Print();
 
   std::cout << "resize: " << std::endl;
   v.resize(20);
-  v.print();
+  v.Print();
 
   v.resize(5);
-  v.print();
+  v.Print();
 
   v.resize(40);
-  v.print();
+  v.Print();
 
   return 0;
 }
