@@ -1,6 +1,6 @@
 #include <iostream>
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
+// #include <pybind11/pybind11.h>
+// #include <pybind11/stl.h>
 #include <vector>
 #include <utility>
 #include <ranges>
@@ -8,59 +8,59 @@
 
 // std::string hello_from_bin() { return "Hello from dcc!"; }
 
-namespace py = pybind11;
+// namespace py = pybind11;
 
-class Point{
-  double x_, y_;
-  double step_size_ = 0.01;
-  Point* target_;
-  std::vector<double> pursuit_curve_x_ = {}, 
-                      pursuit_curve_y_ = {}; 
+// class Point{
+//   double x_, y_;
+//   double step_size_ = 0.01;
+//   Point* target_;
+//   std::vector<double> pursuit_curve_x_ = {}, 
+//                       pursuit_curve_y_ = {}; 
 
-  const double Distance(const Point* p) const {
-    auto [px, py] = p->GetCoordinates(); 
-    return std::hypot(px-x_, py-y_);   // also from cmath, claimed to be more numerically stable than std::sqrt(x*x + y*y)
-  }
-public:
-  Point(const double& x, const double& y): x_(x), y_(y) {}
-  void Step(){
-    auto [tx, ty] = target_->GetCoordinates();
-    const double scale = step_size_/Distance(target_);
-    x_ += scale*(tx-x_);
-    y_ += scale*(ty-y_);
+//   const double Distance(const Point* p) const {
+//     auto [px, py] = p->GetCoordinates(); 
+//     return std::hypot(px-x_, py-y_);   // also from cmath, claimed to be more numerically stable than std::sqrt(x*x + y*y)
+//   }
+// public:
+//   Point(const double& x, const double& y): x_(x), y_(y) {}
+//   void Step(){
+//     auto [tx, ty] = target_->GetCoordinates();
+//     const double scale = step_size_/Distance(target_);
+//     x_ += scale*(tx-x_);
+//     y_ += scale*(ty-y_);
 
-    pursuit_curve_x_.push_back(x_);
-    pursuit_curve_y_.push_back(y_);
-  }
-  std::pair<const std::vector<double>&, const std::vector<double>&> GetPursuitCurve() const noexcept {
-    return {pursuit_curve_x_, pursuit_curve_y_};
-  }
-  const std::pair<double, double> GetCoordinates() const {
-    return {x_, y_};
-  }
-  void SetStepSize(const double& step_size) {
-    step_size_ = step_size;
-  }
-  void SetTarget(Point* target){
-    target_ = target; 
-  }
-};
+//     pursuit_curve_x_.push_back(x_);
+//     pursuit_curve_y_.push_back(y_);
+//   }
+//   std::pair<const std::vector<double>&, const std::vector<double>&> GetPursuitCurve() const noexcept {
+//     return {pursuit_curve_x_, pursuit_curve_y_};
+//   }
+//   const std::pair<double, double> GetCoordinates() const {
+//     return {x_, y_};
+//   }
+//   void SetStepSize(const double& step_size) {
+//     step_size_ = step_size;
+//   }
+//   void SetTarget(Point* target){
+//     target_ = target; 
+//   }
+// };
 
-PYBIND11_MODULE(_core, m) {
-  // m.doc() = "pybind11 hello module";
+// PYBIND11_MODULE(_core, m) {
+//   // m.doc() = "pybind11 hello module";
 
-  // m.def("hello_from_bin", &hello_from_bin, R"pbdoc(
-  //     A function that returns a Hello string.
-  // )pbdoc");
+//   // m.def("hello_from_bin", &hello_from_bin, R"pbdoc(
+//   //     A function that returns a Hello string.
+//   // )pbdoc");
 
-  py::class_<Point>(m, "Point")
-    .def(py::init<const double&, const double&>())
-    .def("Step",            &Point::Step)
-    .def("GetCoordinates",  &Point::GetCoordinates)
-    .def("GetPursuitCurve", &Point::GetPursuitCurve)
-    .def("SetTarget",       &Point::SetTarget)
-    .def("SetStepSize",     &Point::SetStepSize);
-}
+//   py::class_<Point>(m, "Point")
+//     .def(py::init<const double&, const double&>())
+//     .def("Step",            &Point::Step)
+//     .def("GetCoordinates",  &Point::GetCoordinates)
+//     .def("GetPursuitCurve", &Point::GetPursuitCurve)
+//     .def("SetTarget",       &Point::SetTarget)
+//     .def("SetStepSize",     &Point::SetStepSize);
+// }
 
 class Vector{
   int *a_ = nullptr;
@@ -69,13 +69,11 @@ class Vector{
 
   int* GetInitializedArray(size_t capacity){
     int *res = new int[capacity];
-    for (size_t i=0 ; i<capacity ; ++i)
-    {
+    for (size_t i=0 ; i<capacity ; ++i){
       res[i] = 0;
     }
     return res;
   }
-
 public: 
   Vector() {}
   Vector(size_t size) : size_(size) {
@@ -86,10 +84,27 @@ public:
   class iterator{
     int *ptr_ = nullptr;
   public: 
-    iterator(int* ptr): ptr_(ptr) {}
-    int operator*()
-    {
-
+    iterator(int* ptr) noexcept : ptr_(ptr) {}
+    int& operator*() const noexcept {
+      return *ptr_;
+    }
+    iterator& operator++() noexcept {
+      ptr_++;
+      return *this;
+    }
+    iterator operator++(int _) noexcept {
+      iterator tmp = *this;
+      ptr_++;
+      return tmp;
+    }
+    bool operator==(iterator other) const noexcept {
+      return (ptr_ == other.GetPtr());
+    }
+    bool operator!=(iterator other) const noexcept {
+      return (ptr_ != other.GetPtr());
+    }
+    int* GetPtr() const noexcept {
+      return ptr_;
     }
 // Dereferencing (* operator): Return the value at the current position
 // Arrow operator (-> operator): For accessing members (less relevant for int, but good practice)
@@ -99,33 +114,24 @@ public:
 // Inequality comparison (!=): Check if two iterators point to different positions
   };
 
-  iterator begin(){}
-  iterator end(){}
-
-// begin(): Should return an iterator pointing to the first element (i.e., a_)
-// end(): Should return an iterator pointing to one-past-the-last element (i.e., a_ + size_)
-
-// client code
-// std::vector<int> v = {1, 2, 3};
-// for (auto it = v.begin(); it != v.end(); ++it) {
-//     std::cout << *it << std::endl;
-// }
+  iterator begin() const noexcept {
+    return iterator(a_);
+  }
+  iterator end() const noexcept {
+    return iterator(a_ + size_);
+  }
 
   void Print() {
-    for (size_t i=0 ; i<size_ ; i++)
-    {
+    for (size_t i=0 ; i<size_ ; i++){
       std::cout << a_[i] << ", ";
     }
     std::cout << std::endl;
   }
-  void PushBack(const int& val)
-  {
-    if (size_ == capacity_)
-    {
+  void PushBack(const int& val){
+    if (size_ == capacity_){
       capacity_ *= 2;
       int *tmp = GetInitializedArray(capacity_);
-      for (size_t i=0 ; i<size_ ; i++)
-      {
+      for (size_t i=0 ; i<size_ ; i++){
         tmp[i] = a_[i];
       }
       delete [] a_;
@@ -135,16 +141,17 @@ public:
     ++size_;
   }
 
-  void resize(const size_t& size)
-  {
+  void resize(const size_t& size){
     if (size < capacity_) {
       size_ = size;
     } else {
       do {
         capacity_ *= 2; 
       } while (capacity_ < size);
+
       int* tmp = GetInitializedArray(capacity_);
-      for (size_t i=0 ; i<size_ ; ++i){
+
+      for (size_t i=0 ; i<size_ ; ++i) {
         tmp[i] = a_[i];
       }
       delete [] a_;
@@ -152,61 +159,61 @@ public:
       size_ = size;
     }
   }
-  size_t GetCapacity() const noexcept
-  {
+  size_t GetCapacity() const noexcept {
     return capacity_;
   }
-  size_t GetSize() const noexcept
-  {
+  size_t GetSize() const noexcept {
     return size_;
   }
-  Vector& operator=(const Vector& other)
-  {
+  Vector& operator=(const Vector& other){
     if (this != &other){
       delete [] a_;
       size_ = other.GetSize();
       capacity_ = other.GetCapacity();
       a_ = GetInitializedArray(capacity_);
-      for (size_t i=0 ; i<size_ ; ++i)
-      {
+      for (size_t i=0 ; i<size_ ; ++i) {
         a_[i] = other[i];
       }
     }
     return *this;
   }
 
-  int& operator[](size_t i) noexcept
-  {
+  int& operator[](size_t i) noexcept {
     return a_[i]; 
   }
-  const int& operator[](size_t i) const noexcept
-  {
+  const int& operator[](size_t i) const noexcept {
     return a_[i]; 
   }
 };
 
 void RangesExample(){
-
   std::vector<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
   auto processed_numbers = numbers 
                           | std::views::filter([](int n){ return n % 2 == 0; }) 
                           | std::views::transform([](int n){ return n * 2; });
   // processed_numbers now represents a view of {4, 8, 12, 16, 20}
 
-  for (const int& n : processed_numbers)
+  for (const int& n : processed_numbers) {
     std::cout << n << ", ";
-
+  }
   std::cout << std::endl << std::endl;
 }
 
-int main0() {
+int main() {
   size_t size = 3;
   Vector v(size);
 
-  v.Print();
+  for (Vector::iterator it=v.begin() ; it!=v.end() ; it++) {
+    std::cout << *it << ", ";
+  }
+  std::cout << std::endl;
 
-  for (int i=0 ; i<2*size ; ++i)
-  {
+  for (const int& val : v) {
+    std::cout << val << ", ";
+  }
+  std::cout << std::endl;
+
+  for (int i=0 ; i<2*size ; ++i){
     v.PushBack(i);
   }
 
@@ -237,30 +244,30 @@ int main0() {
   return 0;
 }
 
-int main() {
-  Point A(0, 0), B(0, 1), C(1, 1), D(1, 0);
+// int main0() {
+//   Point A(0, 0), B(0, 1), C(1, 1), D(1, 0);
 
-  A.SetTarget(&B);
-  B.SetTarget(&C);
-  C.SetTarget(&D);
-  D.SetTarget(&A);
+//   A.SetTarget(&B);
+//   B.SetTarget(&C);
+//   C.SetTarget(&D);
+//   D.SetTarget(&A);
 
-  for (size_t i=0 ; i<1000 ; ++i) {
-    A.Step();
-    B.Step();
-    C.Step();
-    D.Step();
-  }
-  auto [ax, ay] = A.GetPursuitCurve();
+//   for (size_t i=0 ; i<1000 ; ++i) {
+//     A.Step();
+//     B.Step();
+//     C.Step();
+//     D.Step();
+//   }
+//   auto [ax, ay] = A.GetPursuitCurve();
 
-  for (const double& x : ax){
-    std::cout << x << ", ";
-  }
-  std::cout << std::endl;
+//   for (const double& x : ax){
+//     std::cout << x << ", ";
+//   }
+//   std::cout << std::endl;
   
-  for (const double& y : ay){
-    std::cout << y << ", ";
-  }
+//   for (const double& y : ay){
+//     std::cout << y << ", ";
+//   }
 
-  return 0;  
-}
+//   return 0;  
+// }
