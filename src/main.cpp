@@ -141,7 +141,7 @@ public:
     ++size_;
   }
 
-  void resize(const size_t& size){
+  void Resize(const size_t& size){
     if (size < capacity_) {
       size_ = size;
     } else {
@@ -231,14 +231,14 @@ int main() {
   u[3] = 20; 
   u.Print();
 
-  std::cout << "resize: " << std::endl;
-  v.resize(20);
+  std::cout << "Resize: " << std::endl;
+  v.Resize(20);
   v.Print();
 
-  v.resize(5);
+  v.Resize(5);
   v.Print();
 
-  v.resize(40);
+  v.Resize(40);
   v.Print();
 
   return 0;
