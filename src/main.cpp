@@ -75,7 +75,7 @@ class Vector{
     return res;
   }
 public: 
-  Vector() {}
+  Vector() : Vector(0) {}
   Vector(size_t size) : size_(size) {
     a_ = GetInitializedArray(capacity_);
   }
