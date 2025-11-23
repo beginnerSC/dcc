@@ -88,6 +88,9 @@ public:
     int& operator*() const noexcept {
       return *ptr_;
     }
+    int* operator->() const noexcept {  // useless as int has no members, only for the sake of completeness; will be useful later on if I template the Vector class
+      return ptr_;
+    }
     iterator& operator++() noexcept {
       ptr_++;
       return *this;
