@@ -79,6 +79,14 @@ public:
   Vector(size_t size) : size_(size) {
     a_ = GetInitializedArray(capacity_);
   }
+  Vector(const Vector& other) {
+    size_ = other.GetSize();
+    capacity_ = other.GetCapacity();
+    a_ = GetInitializedArray(other.GetCapacity());
+    for (size_t j=0 ; j<size_ ; ++j) {
+      a_[j] = other[j];
+    }
+  }
   ~Vector() { delete [] a_; }
 
   class iterator{
@@ -243,6 +251,12 @@ int main() {
 
   v.Resize(40);
   v.Print();
+
+  v.Resize(5);
+  v.Print();
+
+  Vector x = v;
+  x.Print();
 
   return 0;
 }
