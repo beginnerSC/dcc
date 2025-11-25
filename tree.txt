@@ -1,0 +1,69 @@
+quant-solution/
+├── src/
+│   └── quantlib/
+│       └── __init__.py                     # Python 入口點
+│
+├── cpp/
+│   ├── include/
+│   │   └── quant/
+│   │       ├── montecarlo/
+│   │       │   ├── mc_engine.hpp
+│   │       │   └── rng.hpp
+│   │       └── pde/
+│   │           ├── solver.hpp
+│   │           └── grid.hpp
+│   │
+│   ├── src/
+│   │   ├── montecarlo/
+│   │   │   ├── mc_engine.cpp
+│   │   │   └── rng.cpp
+│   │   └── pde/
+│   │       ├── solver.cpp
+│   │       └── grid.cpp
+│   │
+│   ├── bindings/
+│   │   ├── montecarlo_bindings.cpp
+│   │   └── pde_bindings.cpp
+│   │
+│   └── CMakeLists.txt                      # 主要建構腳本
+│
+├── tests/
+│   ├── cpp/
+│   │   ├── CMakeLists.txt
+│   │   ├── montecarlo/
+│   │   │   └── test_mc_engine.cpp
+│   │   └── pde/
+│   │       └── test_solver.cpp
+│   │
+│   └── python/
+│       └── test_quantlib.py
+│
+├── docs/                                   # 📚 Sphinx + nbsphinx（包含使用者文件 + Dev Wiki）
+│   ├── conf.py
+│   ├── index.rst
+│
+│   ├── usage/                              # ✅ 使用者導向 Python API 說明
+│   │   ├── api_reference.rst
+│   │   └── examples/
+│   │       └── basic_usage.ipynb
+│
+│   ├── devguide/                           # ✅ 開發者 Wiki（ipynb 設計文件、內部知識）
+│   │   ├── index.rst
+│   │   ├── montecarlo/
+│   │   │   ├── overview.ipynb
+│   │   │   └── design-tradeoffs.ipynb
+│   │   └── pde/
+│   │       ├── solver-structure.ipynb
+│   │       └── math-model.ipynb
+│
+│   └── notebooks/                          # 可選：對外展示用的 notebook
+│       ├── intro.ipynb
+│       └── pde_visualization.ipynb
+│
+├── doxygen/
+│   ├── Doxyfile
+│   └── html/
+│
+├── pyproject.toml
+├── README.md
+└── .gitignore
