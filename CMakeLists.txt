@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # set(PYBIND11_FINDPYTHON ON)
 # find_package(pybind11 CONFIG REQUIRED)
 
-# pybind11_add_module(_core MODULE 
+# pybind11_add_module(_core MODULE
 #     src/main.cpp
 # )
 # install(TARGETS _core DESTINATION dcc)
