@@ -74,18 +74,28 @@ class Vector{
     }
     return res;
   }
+
 public: 
   Vector() : Vector(0) {}
   Vector(size_t size) : size_(size) {
     a_ = GetInitializedArray(capacity_);
   }
   Vector(const Vector& other) {
-    size_ = other.GetSize();
-    capacity_ = other.GetCapacity();
-    a_ = GetInitializedArray(other.GetCapacity());
+    size_ = other.size_;
+    capacity_ = other.capacity_;
+    a_ = GetInitializedArray(other.capacity_);
     for (size_t j=0 ; j<size_ ; ++j) {
       a_[j] = other[j];
     }
+  }
+  Vector(Vector&& other) {
+    a_ = other.a_;
+    size_ = other.size_;
+    capacity_ = other.capacity_;
+
+    other.a_ = nullptr;
+    other.size_ = 0;
+    other.capacity_ = 0;
   }
   ~Vector() { delete [] a_; }
 
@@ -170,17 +180,15 @@ public:
       size_ = size;
     }
   }
-  size_t GetCapacity() const noexcept {
-    return capacity_;
-  }
-  size_t GetSize() const noexcept {
+  size_t Size() const noexcept {
     return size_;
   }
-  Vector& operator=(const Vector& other){
+  Vector& operator=(const Vector& other) noexcept {
     if (this != &other){
-      delete [] a_;
-      size_ = other.GetSize();
-      capacity_ = other.GetCapacity();
+      delete [] a_;                   // clean up existing data  
+
+      size_ = other.size_;            // copy the data
+      capacity_ = other.capacity_;
       a_ = GetInitializedArray(capacity_);
       for (size_t i=0 ; i<size_ ; ++i) {
         a_[i] = other[i];
@@ -188,7 +196,20 @@ public:
     }
     return *this;
   }
+  Vector& operator=(Vector&& other) noexcept {
+    if (this != &other){
+      delete [] a_;                   // clean up existing data
 
+      size_ = other.size_;            // move the data
+      capacity_ = other.capacity_;
+      a_ = other.a_;
+
+      other.a_ = nullptr;             // leave other in safe state
+      other.size_ = 0;
+      other.capacity_ = 0;
+    }
+    return *this;
+  }
   int& operator[](size_t i) noexcept {
     return a_[i]; 
   }
@@ -235,12 +256,16 @@ int main() {
   v[3] = 10;
   v.Print();
 
-  std::cout << "copy ctor: " << std::endl;
+  std::cout << "copy assignment: " << std::endl;
   Vector u;
   
   u = v;
   u[3] = 20; 
   u.Print();
+
+  std::cout << "copy ctor: " << std::endl;
+  Vector x = v;
+  x.Print();
 
   std::cout << "Resize: " << std::endl;
   v.Resize(20);
@@ -255,8 +280,9 @@ int main() {
   v.Resize(5);
   v.Print();
 
-  Vector x = v;
-  x.Print();
+  std::cout << "move assignment: " << std::endl;
+  v = std::move(x);
+  v.Print();
 
   return 0;
 }
