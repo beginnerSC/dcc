@@ -78,7 +78,7 @@ class Vector{
 public: 
   Vector() : Vector(0) {}
   Vector(size_t size) : size_(size) {
-    a_ = GetInitializedArray(capacity_);
+    a_ = GetInitializedArray(capacity_);    // will break if size > capacity_
   }
   Vector(const Vector& other) {
     size_ = other.size_;
