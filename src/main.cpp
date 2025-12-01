@@ -76,9 +76,12 @@ class Vector{
   }
 
 public: 
-  Vector() : Vector(0) {}
-  Vector(size_t size) : size_(size) {
-    a_ = GetInitializedArray(capacity_);    // will break if size > capacity_
+  Vector() : Vector(0) {}  
+  Vector(size_t size) : size_(size) {   // Vector(-5) will break the code
+    while (capacity_ < size) {
+      capacity_ *= 2;
+    }
+    a_ = GetInitializedArray(capacity_);
   }
   Vector(const Vector& other) {
     size_ = other.size_;
@@ -232,6 +235,7 @@ void RangesExample(){
 }
 
 int main() {
+  
   size_t size = 3;
   Vector v(size);
 
