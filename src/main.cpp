@@ -77,7 +77,7 @@ class Vector{
   }
 
 public: 
-  Vector() : Vector(0) {}  // without Vector(0) I get UB in end() when computing a_ + size_ with a_ a nullptr
+  Vector() : Vector(0) {}  // without Vector(0) I get UB in end() when computing (a_ + size_) with a_ nullptr
   Vector(int size) {   // with Vector(size_t size) and no casting below, Vector(-5) will break the code
     if (size < 0) {
       throw std::invalid_argument("Size cannot be negative");
