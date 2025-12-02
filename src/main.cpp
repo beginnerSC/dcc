@@ -5,6 +5,7 @@
 #include <utility>
 #include <ranges>
 #include <cmath>
+#include <stdexcept>
 
 // std::string hello_from_bin() { return "Hello from dcc!"; }
 
@@ -76,9 +77,13 @@ class Vector{
   }
 
 public: 
-  Vector() : Vector(0) {}  
-  Vector(size_t size) : size_(size) {   // Vector(-5) will break the code
-    while (capacity_ < size) {
+  Vector() : Vector(0) {}  // without Vector(0) I get UB in end() when computing a_ + size_ with a_ a nullptr
+  Vector(int size) {   // with Vector(size_t size) and no casting below, Vector(-5) will break the code
+    if (size < 0) {
+      throw std::invalid_argument("Size cannot be negative");
+    }
+    size_ = static_cast<size_t>(size);
+    while (capacity_ < size_) {
       capacity_ *= 2;
     }
     a_ = GetInitializedArray(capacity_);
