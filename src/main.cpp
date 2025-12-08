@@ -6,6 +6,8 @@
 #include <ranges>
 #include <cmath>
 #include <stdexcept>
+#include <string>
+#include <sstream>
 
 // std::string hello_from_bin() { return "Hello from dcc!"; }
 
@@ -237,6 +239,27 @@ void RangesExample(){
     std::cout << n << ", ";
   }
   std::cout << std::endl << std::endl;
+}
+
+
+bool IsEmpty(int a){
+  return (a==-1);
+}
+
+bool IsEmpty(const std::string& a){
+  return a.empty();
+}
+
+std::string FormatValue(int a){
+  std::stringstream ss;
+  ss << "I[" << std::to_string(a) << "]";
+  return ss.str(); 
+}
+
+std::string FormatValue(const std::string& a){
+  std::stringstream ss;
+  ss << "S[" << a << "]";
+  return ss.str();
 }
 
 int main() {
