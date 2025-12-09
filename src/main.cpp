@@ -8,6 +8,7 @@
 #include <stdexcept>
 #include <string>
 #include <sstream>
+#include <unordered_map>
 
 // std::string hello_from_bin() { return "Hello from dcc!"; }
 
@@ -262,8 +263,27 @@ std::string FormatValue(const std::string& a){
   return ss.str();
 }
 
+template <typename TYPE_MAP>
+std::string renderContainer(const TYPE_MAP& map)
+{
+  std::stringstream ss;
+
+  for (const auto& [key, value] : map)
+  {
+    ss << (IsEmpty(key) ? "UNKNOWN" : FormatValue(key)) 
+      << "=" 
+      << (IsEmpty(value) ? "UNSPECIFIED" : FormatValue(value))
+      << "\\n";
+  }
+  return ss.str();
+}
+
 int main() {
-  
+  std::unordered_map<std::string, int> map = {{"Tim", 11}, {"", 9}};
+
+  std::cout << renderContainer(map) << std::endl;
+
+
   size_t size = 3;
   Vector v(size);
 
