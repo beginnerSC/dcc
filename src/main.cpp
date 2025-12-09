@@ -263,8 +263,8 @@ std::string FormatValue(const std::string& a){
   return ss.str();
 }
 
-template <typename TYPE_MAP>
-std::string renderContainer(const TYPE_MAP& map)
+template <typename MapType>
+std::string renderContainer(const MapType& map)
 {
   std::stringstream ss;
 
