@@ -9,6 +9,7 @@
 #include <string>
 #include <sstream>
 #include <unordered_map>
+#include <deque>
 
 // std::string hello_from_bin() { return "Hello from dcc!"; }
 
@@ -276,6 +277,38 @@ std::string renderContainer(const MapType& map)
       << "\\n";
   }
   return ss.str();
+}
+
+
+struct TreeNode {
+  int val;
+  TreeNode *left;
+  TreeNode *right;
+  TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+std::vector<std::vector<int>> levelOrder(TreeNode* root) {
+
+  // need to write test case and debug
+
+  std::vector<std::vector<int>> res;
+
+  std::deque<TreeNode*> q{root};
+
+  while (!q.empty()){
+    std::vector<int> level = {};
+    size_t n = q.size();
+    for (size_t i=0 ; i<n ; i++) {
+      level.push_back(q.front()->val);
+      if (q.front()->left) q.push_back(q.front()->left);
+      if (q.front()->right) q.push_back(q.front()->right);
+      q.pop_front();
+    }
+    res.emplace_back(level);
+  }
+  return res;
 }
 
 int main() {
