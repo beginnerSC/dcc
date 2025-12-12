@@ -291,13 +291,9 @@ struct TreeNode {
 
 std::vector<std::vector<int>> levelOrder(TreeNode* root) {
 
-  // need to write test case and debug
+  if (root==nullptr) return {};
 
   std::vector<std::vector<int>> res;
-
-  if (root==nullptr)
-    return std::vector<std::vector<int>>{};
-
   std::deque<TreeNode*> q{root};
 
   while (!q.empty()){
@@ -309,7 +305,7 @@ std::vector<std::vector<int>> levelOrder(TreeNode* root) {
       if (q.front()->right) q.push_back(q.front()->right);
       q.pop_front();
     }
-    res.emplace_back(level);
+    res.push_back(level);
   }
   return res;
 }
