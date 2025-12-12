@@ -295,6 +295,9 @@ std::vector<std::vector<int>> levelOrder(TreeNode* root) {
 
   std::vector<std::vector<int>> res;
 
+  if (root==nullptr)
+    return std::vector<std::vector<int>>{};
+
   std::deque<TreeNode*> q{root};
 
   while (!q.empty()){
@@ -312,6 +315,29 @@ std::vector<std::vector<int>> levelOrder(TreeNode* root) {
 }
 
 int main() {
+
+// Input: root = [3,9,20,null,null,15,7]
+// Output: [[3],[9,20],[15,7]]
+
+  // TreeNode root(3, &TreeNode(9), &TreeNode(20, &TreeNode(15), &TreeNode(7))); // doesn't compile: '&' requires l-value
+  // TreeNode n15(15), n7(7), n9(9), n20(20, &n15, &n7), root(3, &n9, &n20);
+  TreeNode* root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
+  // TreeNode* root = new TreeNode();
+
+  std::vector<std::vector<int>> res = levelOrder(root);
+  for (const auto& level : res){
+    std::cout << "[";
+
+    for (size_t i=0 ; i<level.size() ; ++i){
+      std::cout << level[i];
+      if (i != level.size()-1) {
+        std::cout << ", ";
+      }
+    }
+    std::cout << "], "; 
+  }
+
+
   std::unordered_map<std::string, int> map = {{"Tim", 11}, {"", 9}};
 
   std::cout << renderContainer(map) << std::endl;
