@@ -311,6 +311,23 @@ std::vector<std::vector<int>> levelOrder(TreeNode* root) {
   return res;
 }
 
+int climbStairs(int n) {   // https://leetcode.com/problems/climbing-stairs/
+  if (n < 3){
+    return n;
+  } else {
+    int pre = 2;
+    int prepre = 1;
+    int res = pre + prepre;  // If I don't initialize, I get overflow. why? 
+    for (int j=3 ; j<n+1 ; ++j) {
+      res = pre + prepre;
+      prepre = pre;
+      pre = res;
+    }
+    return res;
+  }
+}
+
+
 int main() {
 
 // Input: root = [3,9,20,null,null,15,7]
