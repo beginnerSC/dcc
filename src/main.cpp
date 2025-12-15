@@ -317,7 +317,7 @@ int climbStairs(int n) {   // https://leetcode.com/problems/climbing-stairs/
   } else {
     int pre = 2;
     int prepre = 1;
-    int res = pre + prepre;  // If I don't initialize, I get overflow. why? 
+    int res;
     for (int j=3 ; j<n+1 ; ++j) {
       res = pre + prepre;
       prepre = pre;
