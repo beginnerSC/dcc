@@ -315,15 +315,14 @@ int climbStairs(int n) {   // https://leetcode.com/problems/climbing-stairs/
   if (n < 3){
     return n;
   } else {
-    int pre = 2;
-    int prepre = 1;
-    int res;
+    int pre = 1;
+    int cur = 2;
     for (int j=3 ; j<n+1 ; ++j) {
-      res = pre + prepre;
-      prepre = pre;
-      pre = res;
+      int tmp = cur;
+      cur += pre;
+      pre = tmp;
     }
-    return res;
+    return cur;
   }
 }
 
