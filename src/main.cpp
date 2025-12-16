@@ -327,6 +327,16 @@ int climbStairs(int n) {   // https://leetcode.com/problems/climbing-stairs/
   }
 }
 
+int rob(std::vector<int>& nums) { // https://leetcode.com/problems/house-robber/
+  int pre = 0;
+  int cur = nums.front();
+  for (size_t j=1 ; j<nums.size() ; ++j) {
+    int tmp = cur;
+    cur = std::max(nums[j] + pre, cur);
+    pre = tmp;
+  }
+  return cur;
+}
 
 int main() {
 
