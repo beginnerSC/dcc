@@ -337,7 +337,37 @@ int rob(std::vector<int>& nums) { // https://leetcode.com/problems/house-robber/
   return cur;
 }
 
+int coinChange(std::vector<int>& coins, int amount) {   // https://leetcode.com/problems/coin-change/
+  static std::unordered_map<int, int> cache;
+  if (amount < 0) {
+    return -1;
+  } else if (amount == 0) {   // trace the code without this branch
+    return 0;
+  } else if (cache.contains(amount)) {
+    return cache[amount];
+  } else {
+    std::vector<int> num_coins;
+    int min = std::numeric_limits<int>::max();
+    for (int coin : coins){
+      int sub = coinChange(coins, amount - coin);
+      if (sub != -1) {
+        num_coins.push_back(sub + 1);
+      }
+    }
+    cache[amount] = *std::min_element(num_coins.begin(), num_coins.end());
+    return cache[amount];
+  }
+}
+
 int main() {
+
+  std::vector<int> coins = {1, 2, 5};
+  int amount = 11;
+  std::cout << coinChange(coins, amount) << std::endl;
+
+  // will break coinChange
+  // std::vector<int> coins = {2}; 
+  // int amount = 3;
 
 // Input: root = [3,9,20,null,null,15,7]
 // Output: [[3],[9,20],[15,7]]
