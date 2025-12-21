@@ -10,6 +10,7 @@
 #include <sstream>
 #include <unordered_map>
 #include <deque>
+#include <algorithm>
 
 // std::string hello_from_bin() { return "Hello from dcc!"; }
 
