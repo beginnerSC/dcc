@@ -354,7 +354,7 @@ int coinChange(std::vector<int>& coins, int amount) {   // https://leetcode.com/
         num_coins.push_back(sub + 1);
       }
     }
-    cache[amount] = *std::min_element(num_coins.begin(), num_coins.end());
+    cache[amount] = std::ranges::view(num_coins);
     return cache[amount];
   }
 }
