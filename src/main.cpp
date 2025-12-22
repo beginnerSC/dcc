@@ -11,6 +11,8 @@
 #include <unordered_map>
 #include <deque>
 #include <algorithm>
+#include <concepts>
+#include <type_traits>
 
 // std::string hello_from_bin() { return "Hello from dcc!"; }
 
@@ -359,6 +361,32 @@ int coinChange(std::vector<int>& coins, int amount) {   // https://leetcode.com/
     return cache[amount];
   }
 }
+
+template <typename C>
+concept NumericContainer = requires(C c, std::size_t index) {
+    // 1. Type Requirement: Must have a nested value_type
+    typename C::value_type;  // ????
+
+    // 2. Nested Requirement: value_type must be a floating point
+    requires std::floating_point<typename C::value_type>;
+
+    // 3. Compound Requirement: .size() must return exactly std::size_t
+    { c.size() } -> std::same_as<std::size_t>;
+
+    // 4. Compound Requirement: index access must return a reference to value_type
+    { c[index] } -> std::same_as<typename C::value_type&>;
+
+    // 5. Compound Requirement: .clear() must exist and be noexcept
+    { c.clear() } noexcept;
+};
+
+// Usage: A function that only accepts types matching the NumericContainer concept
+void process_data(NumericContainer auto& container) {
+    if (container.size() > 0) {
+        container[0] *= 2.0;
+    }
+}
+
 
 int main() {
 
