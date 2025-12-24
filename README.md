@@ -11,7 +11,7 @@
 
 ## Notes
 
-* This project is modified from the skeleton obtained by running `uv init dcc --lib --build-backend=scikit` 
+* This project is modified from the skeleton obtained by running `uv init dcc --lib --build-backend=scikit`
 * Currently `uv.lock` is gitignored
 * Comment out the below in `CMakeLists.txt` if not building pybind
 ```cmake
