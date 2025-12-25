@@ -1,0 +1,14 @@
+#include <iostream>
+#include <ranges>
+#include <algorithm>
+
+int main()
+{
+    auto reciprocals_view = std::views::iota(1, 1000) | std::views::transform([](double a){ return 1.0/a; });
+
+    double sum = std::ranges::fold_left(reciprocals_view, 0, std::plus<double>());  // requires c++23
+
+    std::cout << sum << std::endl;
+    
+    return 0;
+}
