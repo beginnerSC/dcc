@@ -12,3 +12,24 @@ int main()
     
     return 0;
 }
+
+==============================================
+
+#include <ranges>
+#include <set>
+#include <initializer_list>
+
+// The original generic function
+auto to_set(std::ranges::input_range auto&& r) {
+    return std::forward<decltype(r)>(r) | std::ranges::to<std::set>();
+}
+
+// Overload to handle {1, 2, 3} syntax
+template<typename T>
+auto to_set(std::initializer_list<T> il) {
+    return to_set(std::views::all(il));
+}
+
+int main() {
+    auto mySet = to_set({1, 2, 3}); // Now this works perfectly!
+}
