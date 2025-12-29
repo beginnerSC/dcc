@@ -33,3 +33,11 @@ auto to_set(std::initializer_list<T> il) {
 int main() {
     auto mySet = to_set({1, 2, 3}); // Now this works perfectly!
 }
+
+=============================================
+
+#include <typeinfo>
+
+if (typeid(*a) == typeid(Dog)) {
+    // True only if 'a' is exactly a Dog, not a subclass of Dog, but python isinstance does NOT perform exact type match
+}
