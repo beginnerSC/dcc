@@ -41,3 +41,15 @@ int main() {
 if (typeid(*a) == typeid(Dog)) {
     // True only if 'a' is exactly a Dog, not a subclass of Dog, but python isinstance does NOT perform exact type match
 }
+
+===============================================
+
+#include <type_traits>
+
+template <typename T>
+void check_instance(T& obj) {
+    if constexpr (std::is_base_of_v<Animal, T>) {
+        // True if T inherits from Animal
+    }
+}
+
