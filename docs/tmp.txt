@@ -79,3 +79,54 @@ Python: isinstance(ptr, Dog) looks at the object in memory (Runtime).
 C++ (is_base_of): Looks at the variable declaration (Compile-time).
 If your base class has no virtual functions, it is impossible in standard C++ to detect that ptr is a Dog once it has been cast to an Animal*.
 
+
+======================================
+
+
+#include <iostream>
+#include <type_traits>
+#include <string>
+
+// A universal "Type Tag"
+template <typename T>
+struct Type {};
+
+// Generic isinstance function
+template <typename Obj, typename Target>
+bool isinstance(Obj&& obj, Type<Target>) {
+    // std::decay_t removes const, &, and volatile for a clean comparison
+    return std::is_same_v<std::decay_t<Obj>, Target>;
+}
+
+int main() {
+    int a = 5;
+    double b = 3.14;
+    std::string s = "hello";
+
+    // Now it works for any type!
+    std::cout << std::boolalpha;
+    std::cout << isinstance(a, Type<int>{}) << "\n";     // true
+    std::cout << isinstance(b, Type<double>{}) << "\n";  // true
+    std::cout << isinstance(s, Type<int>{}) << "\n";     // false
+}
+
+// C++20 Template Abbreviations 
+// Define global constants for convenience
+template<typename T> inline constexpr Type<T> IS;
+
+int main() {
+    int a = 10;
+    // Extremely clean syntax
+    if (isinstance(a, IS<int>)) { 
+        /* ... */ 
+    }
+}
+
+
+template <typename Obj, typename TargetBase>
+bool isinstance(Obj&& obj, Type<TargetBase>) {
+    // Returns true if TargetBase is a base of the object's type
+    return std::is_base_of_v<TargetBase, std::decay_t<Obj>>;
+}
+
+
