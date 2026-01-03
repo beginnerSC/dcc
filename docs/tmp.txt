@@ -135,4 +135,30 @@ delete Vector::iterator::GetPtr()
 
 Same-Class Access: In C++, an instance of a class can access the private members of any other instance of that same class
 
+====================================
+
+#include <utility>
+
+std::swap(a, b);
+
+// std::swap is optimized with std::move:
+
+template <typename T>
+void swap(T& a, T& b) {
+    T temp = std::move(a); // Transfers resources from 'a' to 'temp'
+    a = std::move(b);      // Transfers resources from 'b' to 'a'
+    b = std::move(temp);   // Transfers resources from 'temp' to 'b'
+}
+
+// a more python way is
+
+#include <tuple>
+
+int a = 1, b = 2;
+std::tie(a, b) = std::make_pair(b, a); 
+
+// std::tie creates a tuple of references to your existing variables. this will work but no one does that. swap is one example c++ code will naturally be different from python
+
+
+
 
