@@ -129,4 +129,8 @@ bool isinstance(Obj&& obj, Type<TargetBase>) {
     return std::is_base_of_v<TargetBase, std::decay_t<Obj>>;
 }
 
+====================================
 
+
+
+Same-Class Access: In C++, an instance of a class can access the private members of any other instance of that same class
