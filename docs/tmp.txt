@@ -131,6 +131,8 @@ bool isinstance(Obj&& obj, Type<TargetBase>) {
 
 ====================================
 
-
+delete Vector::iterator::GetPtr()
 
 Same-Class Access: In C++, an instance of a class can access the private members of any other instance of that same class
+
+
