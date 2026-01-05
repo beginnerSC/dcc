@@ -181,7 +181,7 @@ import heapq
 numbers = [10, 2, 33, 4, 55, 6, 77]
 top_3 = heapq.nlargest(3, numbers)  # [77, 55, 33]
 
-# same, ask how it works internally
+# same, ask how it works internally, and compare with quickselect which c++ nth_element uses
 
 ===============================================
 
