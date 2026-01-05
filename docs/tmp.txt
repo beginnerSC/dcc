@@ -171,7 +171,7 @@ void getTop3(std::vector<int>& vec) {
     std::nth_element(vec.begin(), vec.begin() + 3, vec.end(), std::greater<int>());
 }
 
-// ask how nth_element work internally
+// ask how nth_element works internally
 
 
 ==========================================
