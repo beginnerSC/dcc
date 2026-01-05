@@ -1,4 +1,4 @@
-#include <iostream>
+i#include <iostream>
 #include <ranges>
 #include <algorithm>
 
@@ -160,5 +160,28 @@ std::tie(a, b) = std::make_pair(b, a);
 // std::tie creates a tuple of references to your existing variables. this will work but no one does that. swap is one example c++ code will naturally be different from python
 
 
+=======================================
 
+#include <algorithm>
+#include <vector>
+
+void getTop3(std::vector<int>& vec) {
+    if (vec.size() <= 3) return;
+    // Partitions the top 3 elements to the beginning of the vector
+    std::nth_element(vec.begin(), vec.begin() + 3, vec.end(), std::greater<int>());
+}
+
+// ask how nth_element work internally
+
+
+==========================================
+
+import heapq
+
+numbers = [10, 2, 33, 4, 55, 6, 77]
+top_3 = heapq.nlargest(3, numbers)  # [77, 55, 33]
+
+# same, ask how it works internally
+
+===============================================
 
