@@ -1,5 +1,6 @@
 # Daily C++ Challenge
 
+![2026 Yearly Heatmap](yearly_heatmaps/2026.png?ts=10022025)
 ![2025 Yearly Heatmap](yearly_heatmaps/2025.png?ts=10022025)
 
 ## How To Run
