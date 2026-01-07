@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <concepts>
 #include <type_traits>
+#include <print>
 
 // std::string hello_from_bin() { return "Hello from dcc!"; }
 
@@ -357,7 +358,7 @@ int coinChange(std::vector<int>& coins, int amount) {   // https://leetcode.com/
         num_coins.push_back(sub + 1);
       }
     }
-    cache[amount] = std::ranges::view(num_coins);
+    cache[amount] = std::ranges::min(num_coins);
     return cache[amount];
   }
 }
@@ -389,6 +390,9 @@ void process_data(NumericContainer auto& container) {
 
 
 int main() {
+  
+  std::unordered_map<std::string, int> dd = {{"AAA", 1}, {"BBB", 2}};
+  std::println("{}", dd);
 
   std::vector<int> coins = {1, 2, 5};
   int amount = 11;
