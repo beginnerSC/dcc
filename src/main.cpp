@@ -14,6 +14,7 @@
 #include <concepts>
 #include <type_traits>
 #include <print>
+#include <functional>
 
 // std::string hello_from_bin() { return "Hello from dcc!"; }
 
@@ -330,6 +331,21 @@ int climbStairs(int n) {   // https://leetcode.com/problems/climbing-stairs/
   }
 }
 
+int maximumProduct(std::vector<int>& nums) {
+    std::partial_sort(nums.begin(), nums.begin() + 3, nums.end(), std::greater<int>());
+
+    int M1 = nums[0];
+    int M2 = nums[1];
+    int M3 = nums[2];
+
+    std::partial_sort(nums.begin(), nums.begin() + 2, nums.end(), std::less<int>());
+
+    int m1 = nums[0];
+    int m2 = nums[1];
+
+    return std::max(M1*M2*M3, M1*m1*m2);
+}
+
 int rob(std::vector<int>& nums) { // https://leetcode.com/problems/house-robber/
   int pre = 0;
   int cur = nums.front();
@@ -390,7 +406,9 @@ void process_data(NumericContainer auto& container) {
 
 
 int main() {
-  
+  std::vector<int> nums = {1, 2, 3, 4};
+  std::println("{}", maximumProduct(nums));
+
   std::unordered_map<std::string, int> dd = {{"AAA", 1}, {"BBB", 2}};
   std::println("{}", dd);
 
