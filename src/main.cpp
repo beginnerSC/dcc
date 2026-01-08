@@ -284,101 +284,6 @@ std::string renderContainer(const MapType& map)
   return ss.str();
 }
 
-
-struct TreeNode {
-  int val;
-  TreeNode *left;
-  TreeNode *right;
-  TreeNode() : val(0), left(nullptr), right(nullptr) {}
-  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
-};
-
-std::vector<std::vector<int>> levelOrder(TreeNode* root) {
-
-  if (root==nullptr) return {};
-
-  std::vector<std::vector<int>> res;
-  std::deque<TreeNode*> q{root};
-
-  while (!q.empty()){
-    std::vector<int> level = {};
-    size_t n = q.size();
-    for (size_t i=0 ; i<n ; i++) {
-      TreeNode* node = q.front(); 
-      level.push_back(node->val);
-      if (node->left) q.push_back(node->left);
-      if (node->right) q.push_back(node->right);
-      q.pop_front();
-    }
-    res.push_back(level);
-  }
-  return res;
-}
-
-int climbStairs(int n) {   // https://leetcode.com/problems/climbing-stairs/
-  if (n < 3){
-    return n;
-  } else {
-    int pre = 1;
-    int cur = 2;
-    for (int j=3 ; j<n+1 ; ++j) {
-      int tmp = cur;
-      cur += pre;
-      pre = tmp;
-    }
-    return cur;
-  }
-}
-
-int maximumProduct(std::vector<int>& nums) {
-    std::partial_sort(nums.begin(), nums.begin() + 3, nums.end(), std::greater<int>());
-
-    int M1 = nums[0];
-    int M2 = nums[1];
-    int M3 = nums[2];
-
-    std::partial_sort(nums.begin(), nums.begin() + 2, nums.end(), std::less<int>());
-
-    int m1 = nums[0];
-    int m2 = nums[1];
-
-    return std::max(M1*M2*M3, M1*m1*m2);
-}
-
-int rob(std::vector<int>& nums) { // https://leetcode.com/problems/house-robber/
-  int pre = 0;
-  int cur = nums.front();
-  for (size_t j=1 ; j<nums.size() ; ++j) {
-    int tmp = cur;
-    cur = std::max(nums[j] + pre, cur);
-    pre = tmp;
-  }
-  return cur;
-}
-
-int coinChange(std::vector<int>& coins, int amount) {   // https://leetcode.com/problems/coin-change/
-  static std::unordered_map<int, int> cache;
-  if (amount < 0) {
-    return -1;
-  } else if (amount == 0) {   // trace the code without this branch
-    return 0;
-  } else if (cache.contains(amount)) {
-    return cache[amount];
-  } else {
-    std::vector<int> num_coins;
-    int min = std::numeric_limits<int>::max();
-    for (int coin : coins){
-      int sub = coinChange(coins, amount - coin);
-      if (sub != -1) {
-        num_coins.push_back(sub + 1);
-      }
-    }
-    cache[amount] = std::ranges::min(num_coins);
-    return cache[amount];
-  }
-}
-
 template <typename C>
 concept NumericContainer = requires(C c, std::size_t index) {
     // 1. Type Requirement: Must have a nested value_type
@@ -406,41 +311,8 @@ void process_data(NumericContainer auto& container) {
 
 
 int main() {
-  std::vector<int> nums = {1, 2, 3, 4};
-  std::println("{}", maximumProduct(nums));
-
   std::unordered_map<std::string, int> dd = {{"AAA", 1}, {"BBB", 2}};
   std::println("{}", dd);
-
-  std::vector<int> coins = {1, 2, 5};
-  int amount = 11;
-  std::cout << coinChange(coins, amount) << std::endl;
-
-  // will break coinChange
-  // std::vector<int> coins = {2}; 
-  // int amount = 3;
-
-// Input: root = [3,9,20,null,null,15,7]
-// Output: [[3],[9,20],[15,7]]
-
-  // TreeNode root(3, &TreeNode(9), &TreeNode(20, &TreeNode(15), &TreeNode(7))); // doesn't compile: '&' requires l-value
-  // TreeNode n15(15), n7(7), n9(9), n20(20, &n15, &n7), root(3, &n9, &n20);
-  TreeNode* root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
-  // TreeNode* root = new TreeNode();
-
-  std::vector<std::vector<int>> res = levelOrder(root);
-  for (const auto& level : res){
-    std::cout << "[";
-
-    for (size_t i=0 ; i<level.size() ; ++i){
-      std::cout << level[i];
-      if (i != level.size()-1) {
-        std::cout << ", ";
-      }
-    }
-    std::cout << "], "; 
-  }
-
 
   std::unordered_map<std::string, int> map = {{"Tim", 11}, {"", 9}};
 
