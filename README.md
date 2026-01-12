@@ -5,7 +5,7 @@
 
 ## How To Run
 
-* Run `build.bat` to build both executable and pybind
+* Run `build.bat` to build both executable and pybind 
     * This requires [CMake](https://cmake.org/download/) installed in your system
 * Run `.venv\Scripts\activate` to activate the venv
 * Run `python -c "from dcc import hello; hello()"` to confirm the pybind is installed successfully
