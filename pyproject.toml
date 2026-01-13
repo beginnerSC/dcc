@@ -1,26 +1,15 @@
-[project]
+[tool.poetry]
 name = "dcc"
 version = "0.1.0"
-description = "Add your description here"
+description = ""
+authors = ["beginnerSC <25188222+beginnerSC@users.noreply.github.com>"]
 readme = "README.md"
-authors = [
-    { name = "ScottChiuNYC", email = "scott.chiu@rutgers.edu" }
-]
-requires-python = ">=3.12"
-dependencies = [
-    "jupyterlab>=4.4.10",
-    "matplotlib>=3.10.7",
-    "pre-commit>=4.3.0",
-    "pybind11>=2.6.0",
-]
 
-[tool.scikit-build]
-minimum-version = "build-system.requires"
-build-dir = "build/{wheel_tag}"
+[tool.poetry.dependencies]
+python = "^3.12"
+pre-commit = "^4.5.1"
 
-[tool.uv]
-cache-keys = [{ file = "pyproject.toml" }, { file = "src/**/*.{h,c,hpp,cpp}" }, { file = "CMakeLists.txt" }]
 
 [build-system]
-requires = ["scikit-build-core>=0.10", "pybind11"]
-build-backend = "scikit_build_core.build"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

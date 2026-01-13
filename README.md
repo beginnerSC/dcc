@@ -3,21 +3,36 @@
 ![2026 Yearly Heatmap](yearly_heatmaps/2026.png?ts=10022025)
 ![2025 Yearly Heatmap](yearly_heatmaps/2025.png?ts=10022025)
 
-## How To Run
+## vcpkg + GoogleTest
 
-* Run `build.bat` to build both executable and pybind 
-    * This requires [CMake](https://cmake.org/download/) installed in your system
-* Run `.venv\Scripts\activate` to activate the venv
-* Run `python -c "from dcc import hello; hello()"` to confirm the pybind is installed successfully
+* [One time initial vcpkg setup](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started?pivots=shell-cmd)
+    * `git clone https://github.com/microsoft/vcpkg.git`
+    * `cd vcpkg && bootstrap-vcpkg.bat`
+    * `set "VCPKG_ROOT=C:\path\to\vcpkg"`
+    * `set PATH=%VCPKG_ROOT%;%PATH%`
+    * In project root `vcpkg new --application`
+        * In `vcpkg-configuration.json`, the `baseline` in `default-registry` is the HEAD commit of the vcpkg registry at the time running `vcpkg new --application`
+    * The `CMakePresets.json` in this guide has `"generator": "Ninja",` which should be replaced by the default generator in the current platform
+        * `cmake --help` to check
+* To configure cmake and build and run gtest: 
+    * Run `cnb` if not using VS Code,
+        * Comment out `cmake --preset=vcpkg` to skip repeated config step
+        * `cmake --preset=vcpkg` does what `cmake -S . -B build` does which is to configure cmake
+        * `cd build & ctest` also runs the test but I like gtest output format more
+        * CTest looks for `CTestTestfile.cmake` which is in `build`, as CTest is included and enabled in project root's `CMakeLists.txt`
+    * `F5` if using VS Code
+        * In `.vscode/launch.json`, use `"preLaunchTask": "CMake: build"` instead of `"preLaunchTask": "CMake: config and build"` to skip repeated config step
+    * When to reconfigured: 
+        * New cpp/h files added
+        * `build` folder deleted, clean rebuild
+* `vcpkg add port fmt` to add the `fmt` library to C++ dependencies
+* TODO: upgrade poetry (which will break all other projects) and add a `build.py`
+    * AI says I can run `poetry config --migrate` to fix `pyproject.toml`? 
 
-## Notes
+### Notes
 
-* This project is modified from the skeleton obtained by running `uv init dcc --lib --build-backend=scikit`
-* Currently `uv.lock` is gitignored
-* Comment out the below in `CMakeLists.txt` if not building pybind
-```cmake
-pybind11_add_module(_core MODULE src/main.cpp)
-install(TARGETS _core DESTINATION dcc)
-```
-* Run `git clean -ffdx -e .venv` to wipe out everything except the venv
-* Run `cmake --build ./build --config Debug --target ALL_BUILD -j 12 --verbose` to build and see log
+* Currently this project has an examples folder compiled but the executable is not run by `cnb.bat` nor `.vscode/launch.json`
+* AI recommends to keep both examples and (not yet created) docs folders and have docs reference examples so that docs is synced
+    * Look into sphinx `literalinclude` and `sphinx-gallery`
+    * Examples can be smoked-tested in CI (build and optionally run with a CMake toggle `BUILD_EXAMPLES`) to ensure docs stay accurate
+* TODO: `build.py` for poetry, `.vscode/launch.json` and `.vscode/tasks.json`, jupyter notebook demo, sphinx docs, pre-commit setup in README, general python related instructions in README

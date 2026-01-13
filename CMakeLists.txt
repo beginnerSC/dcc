@@ -1,25 +1,13 @@
 cmake_minimum_required(VERSION 3.15)
-project(dcc LANGUAGES CXX)
+project(dcc)
+
+include(CTest)
+enable_testing()
 
 set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)     # Optional: Force CMake to error if the compiler doesn't support C++23
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# set(pybind11_DIR ".venv/Lib/site-packages/pybind11/share/cmake/pybind11")
-# set(PYBIND11_FINDPYTHON ON)
-# find_package(pybind11 CONFIG REQUIRED)
-
-# pybind11_add_module(_core MODULE
-#     src/main.cpp
-# )
-# install(TARGETS _core DESTINATION dcc)
-
-
-add_executable(_core_exe    # build an executable to debug; one must specify a main function
-    src/main.cpp
-)
-
-# target_link_libraries(_core_exe PRIVATE pybind11::module)
-
-# Force C++20: Needed for old compilers
-target_compile_options(_core_exe PRIVATE /std:c++latest)
+add_subdirectory(cpp)
+add_subdirectory(examples/cpp)
+add_subdirectory(tests/cpp)
