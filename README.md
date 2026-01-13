@@ -35,4 +35,4 @@
 * AI recommends to keep both examples and (not yet created) docs folders and have docs reference examples so that docs is synced
     * Look into sphinx `literalinclude` and `sphinx-gallery`
     * Examples can be smoked-tested in CI (build and optionally run with a CMake toggle `BUILD_EXAMPLES`) to ensure docs stay accurate
-* TODO: `build.py` for poetry, `.vscode/launch.json` and `.vscode/tasks.json`, jupyter notebook demo, sphinx docs, pre-commit setup in README, general python related instructions in README
+* TODO: `build.py` for poetry, `.vscode/launch.json` and `.vscode/tasks.json`, jupyter notebook demo, sphinx docs, pre-commit setup in README, general python related setup in README
