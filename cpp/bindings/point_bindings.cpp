@@ -4,7 +4,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(point, m) {
+PYBIND11_MODULE(dcc_core, m) {
   // m.doc() = "pybind11 hello module";
 
   // m.def("hello_from_bin", &hello_from_bin, R"pbdoc(

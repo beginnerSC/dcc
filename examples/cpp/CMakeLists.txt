@@ -1,3 +1,3 @@
 add_executable(demo demo.cpp)
 
-target_link_libraries(demo PRIVATE dcc_core)
+target_link_libraries(demo PRIVATE dcc_core_static)

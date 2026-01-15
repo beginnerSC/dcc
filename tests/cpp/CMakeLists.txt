@@ -12,7 +12,7 @@ target_include_directories(dcc_core_test PRIVATE
 )
 
 target_link_libraries(dcc_core_test PRIVATE
-    dcc_core
+    dcc_core_static
     GTest::gtest
     GTest::gtest_main
     # GTest::gmock 
