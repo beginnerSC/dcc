@@ -26,8 +26,6 @@
         * New cpp/h files added
         * `build` folder deleted, clean rebuild
 * `vcpkg add port fmt` to add the `fmt` library to C++ dependencies
-* TODO: upgrade poetry (which will break all other projects) and add a `build.py`
-    * AI says I can run `poetry config --migrate` to fix `pyproject.toml`? 
 
 ### Notes
 
@@ -35,5 +33,6 @@
 * AI recommends to keep both examples and (not yet created) docs folders and have docs reference examples so that docs is synced
     * Look into sphinx `literalinclude` and `sphinx-gallery`
     * Examples can be smoked-tested in CI (build and optionally run with a CMake toggle `BUILD_EXAMPLES`) to ensure docs stay accurate
-* TODO: `build.py` for poetry, `.vscode/launch.json` and `.vscode/tasks.json`, jupyter notebook demo, sphinx docs, pre-commit setup in README, general python related setup in README
+* TODO: jupyter notebook demo, sphinx docs, pre-commit setup in README, general python related setup in README
 * TODO: Is `.vscode/c_cpp_properties.json` needed in order for IntelliSense to work properly? That's not the case for dlc
+* TODO: After poetry upgrade, run `poetry config --migrate` to fix `pyproject.toml` for broken projects

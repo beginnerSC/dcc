@@ -8,11 +8,11 @@
         "name": "C++ Launch (Windows)",
         "type": "cppvsdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/build/Debug/_core_exe.exe",
+        "program": "${workspaceFolder}/build/tests/cpp/Debug/dcc_core_test.exe",
         // "args": [],
         "stopAtEntry": false,
         // "preLaunchTask": "CMake: config and build",
-        "preLaunchTask": "CMake: build",
+        "preLaunchTask": "CMake: build (Debug)",
         "cwd": "${workspaceFolder}",
         // "environment": [],
     }
