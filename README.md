@@ -27,7 +27,16 @@
         * `build` folder deleted, clean rebuild
 * `vcpkg add port fmt` to add the `fmt` library to C++ dependencies
 
-### Notes
+## Python Development
+
+* `poetry shell` to create/activate venv for the project
+    * This requires `poetry` and `poetry-plugin-shell` pip installed in the system
+* `poetry install` to install packages as specified in `pyproject.toml`
+* `poetry add numpy` to add `numpy` to Python dependencies
+* `poetry build` to build wheel
+* Run `update_package.bat` to pip uninstall and pip install the dcc package in the project venv
+
+## Notes
 
 * Currently this project has an examples folder compiled but the executable is not run by `cnb.bat` nor `.vscode/launch.json`
 * AI recommends to keep both examples and (not yet created) docs folders and have docs reference examples so that docs is synced
