@@ -39,7 +39,7 @@
 ## Notes
 
 * Currently this project has an examples folder compiled but the executable is not run by `cnb.bat` nor `.vscode/launch.json`
-* AI recommends to keep both examples and (not yet created) docs folders and have docs reference examples so that docs is synced
+* AI recommends to keep both examples and docs folders and have docs reference examples so that docs is synced
     * Look into sphinx `literalinclude` and `sphinx-gallery`
     * Examples can be smoked-tested in CI (build and optionally run with a CMake toggle `BUILD_EXAMPLES`) to ensure docs stay accurate
 * TODO: jupyter notebook demo, sphinx docs
