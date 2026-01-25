@@ -9,4 +9,4 @@ std::unordered_map<char, int> Counter(std::string_view s) {
         ++res[c];  // Default initializes to 0, then increments
     }
     return res;
-}
+} 
