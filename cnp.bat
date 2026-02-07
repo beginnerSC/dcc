@@ -21,7 +21,6 @@ if "%year%"=="" (
 
 :: ISO 8601 format
 set "FINAL_DATE=%year%-%month%-%day%T%COMMIT_TIME%%TZ_OFFSET%"
-echo commit date is: %FINAL_DATE%
 
 :: commit and push
 set GIT_AUTHOR_DATE=%FINAL_DATE%
