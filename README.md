@@ -34,7 +34,7 @@
 * `poetry install` to install packages as specified in `pyproject.toml`
 * `poetry add numpy` to add `numpy` to Python dependencies
 * `poetry build` to build wheel
-* Run `update_package.bat` to pip uninstall and pip install the dcc package in the project venv
+* Run `update_package.bat` to pip uninstall and pip install the dcc package in the project venv 
 
 ## Notes
 
