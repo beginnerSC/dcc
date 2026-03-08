@@ -242,7 +242,7 @@ TEST(VectorTest, BeginAndEnd) {
   v[1] = 20;
   v[2] = 30;
 
-  Vector::iterator it = v.begin();
+  Vector::Iterator it = v.begin();
   EXPECT_EQ(*it, 10);
 
   ++it;
@@ -261,8 +261,8 @@ TEST(VectorTest, IteratorPreIncrement) {
   v[1] = 20;
   v[2] = 30;
 
-  Vector::iterator it = v.begin();
-  Vector::iterator it2 = ++it;
+  Vector::Iterator it = v.begin();
+  Vector::Iterator it2 = ++it;
   EXPECT_EQ(*it, 20);
   EXPECT_EQ(*it2, 20);
   EXPECT_EQ(it, it2);
@@ -274,8 +274,8 @@ TEST(VectorTest, IteratorPostIncrement) {
   v[1] = 20;
   v[2] = 30;
 
-  Vector::iterator it = v.begin();
-  Vector::iterator it2 = it++;
+  Vector::Iterator it = v.begin();
+  Vector::Iterator it2 = it++;
   EXPECT_EQ(*it, 20);
   EXPECT_EQ(*it2, 10);
   EXPECT_NE(it, it2);
@@ -283,8 +283,8 @@ TEST(VectorTest, IteratorPostIncrement) {
 
 TEST(VectorTest, IteratorEquality) {
   Vector v(3);
-  Vector::iterator it1 = v.begin();
-  Vector::iterator it2 = v.begin();
+  Vector::Iterator it1 = v.begin();
+  Vector::Iterator it2 = v.begin();
   EXPECT_EQ(it1, it2);
 
   ++it1;
@@ -298,7 +298,7 @@ TEST(VectorTest, IteratorLoop) {
   }
 
   int index = 0;
-  for (Vector::iterator it = v.begin(); it != v.end(); ++it) {
+  for (Vector::Iterator it = v.begin(); it != v.end(); ++it) {
     EXPECT_EQ(*it, index * 10);
     ++index;
   }
@@ -313,7 +313,7 @@ TEST(VectorTest, ConstIteratorLoop) {
 
   const Vector& cv = v;
   int index = 0;
-  for (Vector::iterator it = cv.begin(); it != cv.end(); ++it) {
+  for (Vector::Iterator it = cv.begin(); it != cv.end(); ++it) {
     EXPECT_EQ(*it, index * 10);
     ++index;
   }
