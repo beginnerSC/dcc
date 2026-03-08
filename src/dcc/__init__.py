@@ -1,24 +1,25 @@
-from .dcc_core import Point
+from .reset_tools import list_resettable_targets, reset_target, reset_targets
+# from .dcc_core import Point
 
-A = Point(0, 0)
-B = Point(0, 1)
-C = Point(1, 1)
-D = Point(1, 0)
+# A = Point(0, 0)
+# B = Point(0, 1)
+# C = Point(1, 1)
+# D = Point(1, 0)
 
-A.SetTarget(B)
-B.SetTarget(C)
-C.SetTarget(D)
-D.SetTarget(A)
+# A.SetTarget(B)
+# B.SetTarget(C)
+# C.SetTarget(D)
+# D.SetTarget(A)
 
-# Simulate
-for i in range(1000):
-    A.Step()
-    B.Step()
-    C.Step()
-    D.Step()
+# # Simulate
+# for i in range(1000):
+#     A.Step()
+#     B.Step()
+#     C.Step()
+#     D.Step()
 
-# Fetch curves
-ax, ay = A.GetPursuitCurve()
-bx, by = B.GetPursuitCurve()
-cx, cy = C.GetPursuitCurve()
-dx, dy = D.GetPursuitCurve()
+# # Fetch curves
+# ax, ay = A.GetPursuitCurve()
+# bx, by = B.GetPursuitCurve()
+# cx, cy = C.GetPursuitCurve()
+# dx, dy = D.GetPursuitCurve()
