@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DCC_CORE_VECTOR_H
+#define DCC_CORE_VECTOR_H
 
 #include <stdexcept>
 #include <iostream>
@@ -53,3 +54,5 @@ public:
   void Resize(const size_t& size);
   size_t Size() const noexcept;
 };
+
+#endif
