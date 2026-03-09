@@ -13,7 +13,7 @@ poetry run python -c "import os, sys; from pathlib import Path; root = Path(os.e
 if errorlevel 1 (
     echo Reset failed.
     exit /b 1
-)
+) 
 
 echo Done.
 exit /b 0
