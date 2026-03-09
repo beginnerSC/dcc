@@ -3,6 +3,9 @@
 ![2026 Yearly Heatmap](yearly_heatmaps/2026.png?ts=10022025)
 ![2025 Yearly Heatmap](yearly_heatmaps/2025.png?ts=10022025)
 
+
+* This project is for me to practice C++. In this project there is a reset.bat to delete contents of target h and cpp files. For example `reset vector` deletes contents of `vector.h` and `vector.cpp` so that I can rewrite from scratch and run git diff and unittests
+
 ## vcpkg + GoogleTest
 
 * [One time initial vcpkg setup](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started?pivots=shell-cmd)

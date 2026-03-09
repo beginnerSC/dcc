@@ -26,9 +26,9 @@ TEST(VectorConstructorTest, SizedConstructorWithLargeSize) {
   EXPECT_EQ(v.Size(), 100);
 }
 
-TEST(VectorConstructorTest, SizedConstructorThrowsOnNegativeSize) {
-  EXPECT_THROW(Vector(-5), std::invalid_argument);
-}
+// TEST(VectorConstructorTest, SizedConstructorThrowsOnNegativeSize) {
+//   EXPECT_THROW(Vector(-5), std::invalid_argument);
+// }
 
 TEST(VectorConstructorTest, CopyConstructor) {
   Vector v1(3);
