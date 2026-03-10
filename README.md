@@ -3,6 +3,8 @@
 ![2026 Yearly Heatmap](yearly_heatmaps/2026.png?ts=10022025)
 ![2025 Yearly Heatmap](yearly_heatmaps/2025.png?ts=10022025)
 
+* [Diff two branches on GitHub](https://github.com/beginnerSC/dcc/compare/master..dev)
+
 ## vcpkg + GoogleTest
 
 * [One time initial vcpkg setup](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started?pivots=shell-cmd)
