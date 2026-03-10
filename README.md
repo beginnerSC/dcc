@@ -3,8 +3,7 @@
 ![2026 Yearly Heatmap](yearly_heatmaps/2026.png?ts=10022025)
 ![2025 Yearly Heatmap](yearly_heatmaps/2025.png?ts=10022025)
 
-* I'll delete the contents of `vector.h` and `vector.cpp` with `reset.bat` and rewrite them as a practice. One can [diff the master and the dev branches on GitHub](https://github.com/beginnerSC/dcc/compare/master..dev)
-
+* This project is for me to practice C++. In this project there is a reset.bat to delete contents of target h and cpp files. For example `reset vector` deletes contents of `vector.h` and `vector.cpp` so that I can rewrite from scratch and run unittests. One can [diff the master and the dev branches on GitHub](https://github.com/beginnerSC/dcc/compare/master..dev). 
 
 ## vcpkg + GoogleTest
 
@@ -48,3 +47,30 @@
 * TODO: jupyter notebook demo, sphinx docs
 * TODO: Is `.vscode/c_cpp_properties.json` needed in order for IntelliSense to work properly? That's not the case for dlc
 * TODO: After poetry upgrade, run `poetry config --migrate` to fix `pyproject.toml` for broken projects
+* In the `Vector` class, reallocation invalidates the iterator. See below example. `std::vector` has the same issue too. It's user's responsibility not to use invalidated iterators. `std::vector` provides `reserve()` to pre-allocate space (prevent reallocation)
+```cpp
+Vector v;  // capacity_ = 10 by default
+v.PushBack(1);
+v.PushBack(2);
+v.PushBack(3);
+// Now size_ = 3, capacity_ = 10 - okay so far
+
+Vector::Iterator it = v.begin();
+// it.ptr_ points to v.a_[0]
+
+// Fill up to cause reallocation (capacity becomes 10)
+for (int i = 4; i <= 10; ++i) {
+  v.PushBack(i);
+}
+// size_ = 10, capacity_ = 10, no reallocation yet
+
+// THIS push causes reallocation:
+v.PushBack(11);  // size_ (10) == capacity_ (10), so:
+                 // 1. Allocate new array with capacity_ = 20
+                 // 2. Copy old data to new array
+                 // 3. delete[] old array  ← OLD ARRAY DELETED!
+                 // 4. a_ = new array
+
+// Now it.ptr_ still points to the OLD deleted array!
+std::cout << *it;  // Undefined behavior! Crashes or garbage value
+```
