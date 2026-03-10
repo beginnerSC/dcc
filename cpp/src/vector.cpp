@@ -30,9 +30,7 @@ Vector::Vector(Vector&& other) : a_(other.a_), size_(other.size_), capacity_(oth
 }
 
 Vector::~Vector() {
-  if (a_) {
-    delete [] a_;
-  }
+  delete[] a_;
 }
 
 int& Vector::Iterator::operator*() const {
@@ -63,29 +61,28 @@ bool Vector::Iterator::operator!=(const Iterator& other) const {
 }
 
 Vector::Iterator Vector::begin() const {
-  Iterator it(a_);
-  return it;
+  return Iterator(a_);
 }
 
 Vector::Iterator Vector::end() const {
-  Iterator it(a_ + size_);
-  return it;
+  return Iterator(a_ + size_);
 }
 
 void Vector::Print() const {
-  for (int i=0 ; i<size_ ; ++i) {
+  for (size_t i=0 ; i<size_ ; ++i) {
     std::cout << a_[i] << ", ";
   }
+  std::cout << std::endl;
 }
 
 void Vector::PushBack(int elem) {
   if (size_ == capacity_) {
     capacity_ *= 2;
     int* tmp = GetInitializedArray(capacity_);
-    for (int i=0 ; i<size_ ; ++i) {
+    for (size_t i=0 ; i<size_ ; ++i) {
       tmp[i] = a_[i];
     }
-    delete [] a_;
+    delete[] a_;
     a_ = tmp;
   }
   a_[size_++] = elem;
@@ -97,10 +94,10 @@ void Vector::Resize(size_t size) {
       capacity_ *= 2;
     }
     int* tmp = GetInitializedArray(capacity_);
-    for (int i=0 ; i<size_ ; ++i) {
+    for (size_t i=0 ; i<size_ ; ++i) {
       tmp[i] = a_[i];
     }
-    delete [] a_;
+    delete[] a_;
     a_ = tmp;
   }
   size_ = size;
@@ -112,11 +109,11 @@ size_t Vector::Size() const {
 
 Vector& Vector::operator=(const Vector& other) {
   if (this != &other) {
-    delete [] a_;
+    delete[] a_;
     size_ = other.size_;
     capacity_ = other.capacity_;
     a_ = GetInitializedArray(capacity_);
-    for (int i=0 ; i<size_ ; ++i) {
+    for (size_t i=0 ; i<size_ ; ++i) {
       a_[i] = other[i];
     }
   }
@@ -125,7 +122,7 @@ Vector& Vector::operator=(const Vector& other) {
 
 Vector& Vector::operator=(Vector&& other) {
   if (this != &other) {
-    delete [] a_;
+    delete[] a_;
     size_ = other.size_;
     capacity_ = other.capacity_;
     a_ = other.a_;
@@ -137,6 +134,10 @@ Vector& Vector::operator=(Vector&& other) {
   return *this;
 }
 
-int& Vector::operator[](size_t idx) const {
-  return a_[idx];
+int& Vector::operator[](size_t i) {
+  return a_[i];
+}
+
+const int& Vector::operator[](size_t i) const {
+  return a_[i];
 }

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <stdexcept>
+#include <type_traits>
 #include "dcc_core/vector.h"
 
 class VectorTest : public ::testing::Test {
@@ -233,6 +234,35 @@ TEST(VectorTest, ConstSubscriptOperator) {
   EXPECT_EQ(cv[0], 10);
   EXPECT_EQ(cv[1], 20);
   EXPECT_EQ(cv[2], 30);
+}
+
+TEST(VectorTest, OperatorSubscriptConstCorrectness) {
+  // Verify non-const version returns int&
+  static_assert(
+    std::is_same_v<
+      decltype(std::declval<Vector>()[0]),
+      int&
+    >,
+    "Non-const operator[] must return int&"
+  );
+
+  // Verify const version returns const int&
+  static_assert(
+    std::is_same_v<
+      decltype(std::declval<const Vector>()[0]),
+      const int&
+    >,
+    "Const operator[] must return const int&"
+  );
+
+  // Runtime verification: non-const vector allows modification
+  Vector v(3);
+  v[0] = 10;
+  EXPECT_EQ(v[0], 10);
+
+  // Const vector allows reading
+  const Vector& cv = v;
+  EXPECT_EQ(cv[0], 10);
 }
 
 // Iterator tests

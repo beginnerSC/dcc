@@ -36,7 +36,8 @@ public:
   size_t Size() const;
   Vector& operator=(const Vector& other);
   Vector& operator=(Vector&& other);
-  int& operator[](size_t idx) const;
+  int& operator[](size_t idx);
+  const int& operator[](size_t idx) const;
 };
 
 #endif 
