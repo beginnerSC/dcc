@@ -3,7 +3,8 @@
 ![2026 Yearly Heatmap](yearly_heatmaps/2026.png?ts=10022025)
 ![2025 Yearly Heatmap](yearly_heatmaps/2025.png?ts=10022025)
 
-* [Diff two branches on GitHub](https://github.com/beginnerSC/dcc/compare/master..dev)
+* I'll delete the contents of `vector.h` and `vector.cpp` with `reset.bat` and rewrite them as a practice. One can [diff the master and the dev branches on GitHub](https://github.com/beginnerSC/dcc/compare/master..dev)
+
 
 ## vcpkg + GoogleTest
 

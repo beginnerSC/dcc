@@ -291,6 +291,30 @@ TEST(VectorTest, IteratorEquality) {
   EXPECT_NE(it1, it2);
 }
 
+TEST(VectorTest, IteratorDereferenceMutation) {
+  Vector v(3);
+  v[0] = 10;
+  v[1] = 20;
+  v[2] = 30;
+
+  // Test that *it = value modifies the actual vector element
+  // This only works if Iterator::operator* returns int& as it's supposed to
+  Vector::Iterator it = v.begin();
+  *it = 100;
+  EXPECT_EQ(v[0], 100);
+  EXPECT_EQ(*it, 100);
+
+  ++it;
+  *it = 200;
+  EXPECT_EQ(v[1], 200);
+  EXPECT_EQ(*it, 200);
+
+  ++it;
+  *it = 300;
+  EXPECT_EQ(v[2], 300);
+  EXPECT_EQ(*it, 300);
+}
+
 TEST(VectorTest, IteratorLoop) {
   Vector v(5);
   for (int i = 0; i < 5; ++i) {
