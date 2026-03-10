@@ -20,7 +20,7 @@ public:
 
   public:
     Iterator(int* ptr) : ptr_(ptr) {}
-    int operator*() const;
+    int& operator*() const;
     int* operator->() const;  
     Iterator& operator++();
     Iterator operator++(int);

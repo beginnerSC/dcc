@@ -18,7 +18,7 @@ Vector::Vector(size_t size) : size_(size) {
 
 Vector::Vector(const Vector& other) : size_(other.size_), capacity_(other.capacity_) {
   a_ = GetInitializedArray(capacity_);
-  for (size_t i=0 ; i<other.Size() ; ++i) {
+  for (size_t i=0 ; i<size_ ; ++i) {
     a_[i] = other[i];
   }
 }
@@ -35,7 +35,7 @@ Vector::~Vector() {
   }
 }
 
-int Vector::Iterator::operator*() const {
+int& Vector::Iterator::operator*() const {
   return *ptr_;
 }
 
