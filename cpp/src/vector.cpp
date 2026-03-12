@@ -48,7 +48,7 @@ Vector::Iterator& Vector::Iterator::operator++() {
 
 Vector::Iterator Vector::Iterator::operator++(int) {
   Iterator tmp = *this;
-  ++ptr_;
+  ++(*this);
   return tmp;
 }
 
