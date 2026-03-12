@@ -1,7 +1,7 @@
 #include "dcc_core/vector.h"
 #include <iostream>
 
-int* Vector::GetInitializedArray(const size_t capacity) {
+int* Vector::GetInitializedArray(size_t capacity) const {
   int* res = new int[capacity];
   for (size_t i=0 ; i<capacity ; ++i) {
     res[i] = 0;

@@ -3,7 +3,10 @@
 ![2026 Yearly Heatmap](yearly_heatmaps/2026.png?ts=10022025)
 ![2025 Yearly Heatmap](yearly_heatmaps/2025.png?ts=10022025)
 
-* This project is for me to practice C++. In this project there is a reset.bat to delete contents of target h and cpp files. For example `reset vector` deletes contents of `vector.h` and `vector.cpp` so that I can rewrite from scratch and run unittests. One can [diff the master and the dev branches on GitHub](https://github.com/beginnerSC/dcc/compare/master..dev). 
+* This project is for me to practice C++. In this project there is a reset.bat to delete contents of target h and cpp files. For example `reset vector` deletes contents of `vector.h` and `vector.cpp` so that I can rewrite from scratch and run unittests. One can [diff the master and the dev branches on GitHub](https://github.com/beginnerSC/dcc/compare/master..dev)
+* TODO: Move List of Vector's Member Functions to README
+* TODO: Note that any single-argument constructor that acts as a type conversion should be explicit unless you intentionally want implicit conversion. For iterators, pointer-to-iterator conversion should never be implicit
+* TODO: Note that it's pointless to const a by-value argument
 
 ## vcpkg + GoogleTest
 

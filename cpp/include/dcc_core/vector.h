@@ -6,7 +6,7 @@ class Vector {
   size_t size_ = 0;
   size_t capacity_ = 10;
   
-  int* GetInitializedArray(const size_t capacity);
+  int* GetInitializedArray(size_t capacity) const;
 
 public:
   Vector() : Vector(0) {}
@@ -19,7 +19,7 @@ public:
     int* ptr_ = nullptr;
 
   public:
-    Iterator(int* ptr) : ptr_(ptr) {}
+    explicit Iterator(int* ptr) : ptr_(ptr) {}
     int& operator*() const;
     int* operator->() const;  
     Iterator& operator++();
@@ -31,7 +31,7 @@ public:
   Iterator begin() const;
   Iterator end() const;
   void Print() const;
-  void PushBack(int);
+  void PushBack(int elem);
   void Resize(size_t size);
   size_t Size() const;
   Vector& operator=(const Vector& other);

@@ -92,6 +92,32 @@ TEST(VectorTest, PushBackCausesCapacityGrowth) {
   EXPECT_EQ(v.Size(), 20);
 }
 
+TEST(VectorTest, PushBackPreservesExistingElementsAfterGrowth) {
+  Vector v(10);
+  for (size_t i = 0; i < v.Size(); ++i) {
+    v[i] = static_cast<int>(i + 1);
+  }
+
+  // Next push should force reallocation, and old elements must remain unchanged.
+  v.PushBack(999);
+
+  EXPECT_EQ(v.Size(), 11);
+  for (size_t i = 0; i < 10; ++i) {
+    EXPECT_EQ(v[i], static_cast<int>(i + 1));
+  }
+  EXPECT_EQ(v[10], 999);
+}
+
+TEST(VectorTest, PushBackDoesNotLosePreviousValue) {
+  Vector v;
+  v.PushBack(42);
+  v.PushBack(77);
+
+  EXPECT_EQ(v.Size(), 2);
+  EXPECT_EQ(v[0], 42);
+  EXPECT_EQ(v[1], 77);
+}
+
 // Resize tests
 TEST(VectorTest, ResizeToSmaller) {
   Vector v(10);
@@ -266,6 +292,12 @@ TEST(VectorTest, OperatorSubscriptConstCorrectness) {
 }
 
 // Iterator tests
+TEST(VectorTest, IteratorConstructorMustBeExplicit) {
+  // Keep this as runtime assertions so the test suite compiles regardless.
+  EXPECT_FALSE((std::is_convertible_v<int*, Vector::Iterator>));
+  EXPECT_TRUE((std::is_constructible_v<Vector::Iterator, int*>));
+}
+
 TEST(VectorTest, BeginAndEnd) {
   Vector v(3);
   v[0] = 10;
@@ -296,6 +328,22 @@ TEST(VectorTest, IteratorPreIncrement) {
   EXPECT_EQ(*it, 20);
   EXPECT_EQ(*it2, 20);
   EXPECT_EQ(it, it2);
+}
+
+TEST(VectorTest, IteratorPreIncrementChaining) {
+  Vector v(5);
+  for (int i = 0; i < 5; ++i) {
+    v[i] = (i + 1) * 10;
+  }
+
+  Vector::Iterator it = v.begin();
+
+  // If operator++() returns by value, ++++it only advances it once (the second
+  // ++ acts on a discarded temporary), so *it == 20.
+  // If operator++() correctly returns Iterator&, ++++it advances it twice,
+  // so *it == 30.
+  ++++it;
+  EXPECT_EQ(*it, 30);
 }
 
 TEST(VectorTest, IteratorPostIncrement) {
