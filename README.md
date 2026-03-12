@@ -77,3 +77,27 @@ v.PushBack(11);  // size_ (10) == capacity_ (10), so:
 // Now it.ptr_ still points to the OLD deleted array!
 std::cout << *it;  // Undefined behavior! Crashes or garbage value
 ```
+
+## List of Vector's Member Functions
+
+* 要照順序寫才能直接看 git diff 對答案
+* 所有用到 private member variables 時也照 `a_`，`size_`，`capacity_` 的順序
+* Constructors
+    * `Vector()`
+    * `Vector(int)`
+    * Copy constructor
+    * Move constructor
+* Destructor
+* class iterator
+    * Constructor
+    * Destructor?
+    * operators `*`, `->`, `++`, `++(int)`, `==`, `!=`
+* begin
+* end
+* Print
+* PushBack
+* Resize
+* Size
+* Copy assignment
+* Move assignment
+* operator[]
