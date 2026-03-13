@@ -4,11 +4,6 @@
 ![2025 Yearly Heatmap](yearly_heatmaps/2025.png?ts=10022025)
 
 * This project is for me to practice C++. In this project there is a reset.bat to delete contents of target h and cpp files. For example `reset vector` deletes contents of `vector.h` and `vector.cpp` so that I can rewrite from scratch and run unittests. One can [diff the master and the dev branches on GitHub](https://github.com/beginnerSC/dcc/compare/master..dev)
-* TODO: Move List of Vector's Member Functions to README
-* TODO: Note that any single-argument constructor that acts as a type conversion should be explicit unless you intentionally want implicit conversion. For iterators, pointer-to-iterator conversion should never be implicit
-* TODO: Note that it's pointless to const a by-value argument
-* TODO: Note that `other.size_ = 0` and `other.capacity_ = 0` are still recommended or otherwise when calling other functions like `Resize` on a supposedly hollow object it might break
-* TODO: Note that best practice implementing `Vector::Iterator::operator++(int)` is to use `++(*this)`, reusing `Vector::Iterator::operator++()` so that the logic stays in one place
 
 ## vcpkg + GoogleTest
 
@@ -52,7 +47,45 @@
 * TODO: jupyter notebook demo, sphinx docs
 * TODO: Is `.vscode/c_cpp_properties.json` needed in order for IntelliSense to work properly? That's not the case for dlc
 * TODO: After poetry upgrade, run `poetry config --migrate` to fix `pyproject.toml` for broken projects
-* In the `Vector` class, reallocation invalidates the iterator. See below example. `std::vector` has the same issue too. It's user's responsibility not to use invalidated iterators. `std::vector` provides `reserve()` to pre-allocate space (prevent reallocation)
+
+## List of Vector's Member Functions
+
+* 要照順序寫才能直接看 git diff 對答案
+* 所有用到 private member variables 時也照 `a_`，`size_`，`capacity_` 的順序
+* Constructors
+    * `Vector()`
+    * `Vector(int)`
+    * Copy constructor
+    * Move constructor
+* Destructor
+* class iterator
+    * Constructor
+    * Destructor?
+    * operators `*`, `->`, `++`, `++(int)`, `==`, `!=`
+* begin
+* end
+* Print
+* PushBack
+* Resize
+* Size
+* Copy assignment
+* Move assignment
+* operator[]
+
+## Notes on the Vector Class
+
+* Any single-argument constructor that acts as a type conversion should be explicit unless you intentionally want implicit conversion. For iterators, pointer-to-iterator conversion should never be implicit. What could happen: 
+```cpp
+void EraseAt(Vector::Iterator it);   // expects iterator into Vector
+void EraseAt(int index);             // expects index
+
+int* p = new int(42);
+EraseAt(p); // Wanted to say EraseAt(42) but mistakenly say EraseAt(p). If Iterator(int*) is NOT explicit, this will call EraseAt(Iterator)
+```
+* It's pointless to const a by-value argument as it will make a copy
+* `other.size_ = 0` and `other.capacity_ = 0` are still recommended or otherwise when calling other functions like `Resize` on a supposedly hollow object it might break
+* Best practice implementing `Vector::Iterator::operator++(int)` is to use `++(*this)`, reusing `Vector::Iterator::operator++()` so that the logic stays in one place
+* Reallocation invalidates the iterator. See below example. `std::vector` has the same issue too. It's user's responsibility not to use invalidated iterators. `std::vector` provides `reserve()` to pre-allocate space (prevent reallocation)
 ```cpp
 Vector v;  // capacity_ = 10 by default
 v.PushBack(1);
@@ -79,27 +112,4 @@ v.PushBack(11);  // size_ (10) == capacity_ (10), so:
 // Now it.ptr_ still points to the OLD deleted array!
 std::cout << *it;  // Undefined behavior! Crashes or garbage value
 ```
-
-## List of Vector's Member Functions
-
-* 要照順序寫才能直接看 git diff 對答案
-* 所有用到 private member variables 時也照 `a_`，`size_`，`capacity_` 的順序
-* Constructors
-    * `Vector()`
-    * `Vector(int)`
-    * Copy constructor
-    * Move constructor
-* Destructor
-* class iterator
-    * Constructor
-    * Destructor?
-    * operators `*`, `->`, `++`, `++(int)`, `==`, `!=`
-* begin
-* end
-* Print
-* PushBack
-* Resize
-* Size
-* Copy assignment
-* Move assignment
-* operator[]
+* I keep forgetting `delete[] a_` in move assignment!
