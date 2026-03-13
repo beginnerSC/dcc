@@ -7,8 +7,8 @@
 * TODO: Move List of Vector's Member Functions to README
 * TODO: Note that any single-argument constructor that acts as a type conversion should be explicit unless you intentionally want implicit conversion. For iterators, pointer-to-iterator conversion should never be implicit
 * TODO: Note that it's pointless to const a by-value argument
-* TODO: Note that `other.size_ = 0` and `other.capacity_ = 0` are still recommended or otherwise when calling other functions like `Resize` from the supposedly hollow object it might break
-* TODO: Note that best practice is to use `++(*this)`. This way `Vector::Iterator::operator++(int)` will reuse `Vector::Iterator::operator++()` and the logic stays in one place
+* TODO: Note that `other.size_ = 0` and `other.capacity_ = 0` are still recommended or otherwise when calling other functions like `Resize` on a supposedly hollow object it might break
+* TODO: Note that best practice implementing `Vector::Iterator::operator++(int)` is to use `++(*this)`, reusing `Vector::Iterator::operator++()` so that the logic stays in one place
 
 ## vcpkg + GoogleTest
 
