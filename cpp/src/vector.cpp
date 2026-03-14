@@ -109,9 +109,10 @@ size_t Vector::Size() const {
 
 Vector& Vector::operator=(const Vector& other) {
   if (this != &other) {
-    delete[] a_;
     size_ = other.size_;
     capacity_ = other.capacity_;
+
+    delete[] a_;
     a_ = GetInitializedArray(capacity_);
     for (size_t i=0 ; i<size_ ; ++i) {
       a_[i] = other[i];
@@ -123,9 +124,9 @@ Vector& Vector::operator=(const Vector& other) {
 Vector& Vector::operator=(Vector&& other) {
   if (this != &other) {
     delete[] a_;
+    a_ = other.a_;
     size_ = other.size_;
     capacity_ = other.capacity_;
-    a_ = other.a_;
 
     other.a_ = nullptr;
     other.size_ = 0;

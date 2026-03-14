@@ -5,9 +5,7 @@ class Vector {
   int* a_ = nullptr;
   size_t size_ = 0;
   size_t capacity_ = 10;
-  
   int* GetInitializedArray(size_t capacity) const;
-
 public:
   Vector() : Vector(0) {}
   Vector(size_t size);
@@ -17,7 +15,6 @@ public:
 
   class Iterator {
     int* ptr_ = nullptr;
-
   public:
     explicit Iterator(int* ptr) : ptr_(ptr) {}
     int& operator*() const;
