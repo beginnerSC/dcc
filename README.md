@@ -51,7 +51,7 @@
 ## List of Vector's Member Functions
 
 * 要照順序寫才能直接看 git diff 對答案
-* 所有用到 private member variables 時也照 `a_`，`size_`，`capacity_` 的順序
+* 所有用到 private member variables 時也照 `data_`，`size_`，`capacity_` 的順序
 * Constructors
     * `Vector()`
     * `Vector(int)`
@@ -95,7 +95,7 @@ v.PushBack(3);
 // Now size_ = 3, capacity_ = 10 - okay so far
 
 Vector::Iterator it = v.begin();
-// it.ptr_ points to v.a_[0]
+// it.ptr_ points to v.data_[0]
 
 // Fill up to cause reallocation (capacity becomes 10)
 for (int i = 4; i <= 10; ++i) {
@@ -108,9 +108,9 @@ v.PushBack(11);  // size_ (10) == capacity_ (10), so:
                  // 1. Allocate new array with capacity_ = 20
                  // 2. Copy old data to new array
                  // 3. delete[] old array  ← OLD ARRAY DELETED!
-                 // 4. a_ = new array
+                 // 4. data_ = new array
 
 // Now it.ptr_ still points to the OLD deleted array!
 std::cout << *it;  // Undefined behavior! Crashes or garbage value
 ```
-* I keep forgetting `delete[] a_` in move assignment!
+* I keep forgetting `delete[] data_` in move assignment!

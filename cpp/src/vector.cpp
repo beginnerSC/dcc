@@ -13,24 +13,24 @@ Vector::Vector(size_t size) : size_(size) {
   while (size_ > capacity_) {
     capacity_ *= 2;
   }
-  a_ = GetInitializedArray(capacity_);
+  data_ = GetInitializedArray(capacity_);
 }
 
 Vector::Vector(const Vector& other) : size_(other.size_), capacity_(other.capacity_) {
-  a_ = GetInitializedArray(capacity_);
+  data_ = GetInitializedArray(capacity_);
   for (size_t i=0 ; i<size_ ; ++i) {
-    a_[i] = other[i];
+    data_[i] = other[i];
   }
 }
 
-Vector::Vector(Vector&& other) : a_(other.a_), size_(other.size_), capacity_(other.capacity_) {
-  other.a_ = nullptr;
+Vector::Vector(Vector&& other) : data_(other.data_), size_(other.size_), capacity_(other.capacity_) {
+  other.data_ = nullptr;
   other.size_ = 0;
   other.capacity_ = 0;
 }
 
 Vector::~Vector() {
-  delete[] a_;
+  delete[] data_;
 }
 
 int& Vector::Iterator::operator*() const {
@@ -61,16 +61,16 @@ bool Vector::Iterator::operator!=(const Iterator& other) const {
 }
 
 Vector::Iterator Vector::begin() const {
-  return Iterator(a_);
+  return Iterator(data_);
 }
 
 Vector::Iterator Vector::end() const {
-  return Iterator(a_ + size_);
+  return Iterator(data_ + size_);
 }
 
 void Vector::Print() const {
   for (size_t i=0 ; i<size_ ; ++i) {
-    std::cout << a_[i] << ", ";
+    std::cout << data_[i] << ", ";
   }
   std::cout << std::endl;
 }
@@ -80,12 +80,12 @@ void Vector::PushBack(int elem) {
     capacity_ *= 2;
     int* tmp = GetInitializedArray(capacity_);
     for (size_t i=0 ; i<size_ ; ++i) {
-      tmp[i] = a_[i];
+      tmp[i] = data_[i];
     }
-    delete[] a_;
-    a_ = tmp;
+    delete[] data_;
+    data_ = tmp;
   }
-  a_[size_++] = elem;
+  data_[size_++] = elem;
 }
 
 void Vector::Resize(size_t size) {
@@ -95,10 +95,10 @@ void Vector::Resize(size_t size) {
     }
     int* tmp = GetInitializedArray(capacity_);
     for (size_t i=0 ; i<size_ ; ++i) {
-      tmp[i] = a_[i];
+      tmp[i] = data_[i];
     }
-    delete[] a_;
-    a_ = tmp;
+    delete[] data_;
+    data_ = tmp;
   }
   size_ = size;
 }
@@ -112,10 +112,10 @@ Vector& Vector::operator=(const Vector& other) {
     size_ = other.size_;
     capacity_ = other.capacity_;
 
-    delete[] a_;
-    a_ = GetInitializedArray(capacity_);
+    delete[] data_;
+    data_ = GetInitializedArray(capacity_);
     for (size_t i=0 ; i<size_ ; ++i) {
-      a_[i] = other[i];
+      data_[i] = other[i];
     }
   }
   return *this;
@@ -123,12 +123,12 @@ Vector& Vector::operator=(const Vector& other) {
 
 Vector& Vector::operator=(Vector&& other) {
   if (this != &other) {
-    delete[] a_;
-    a_ = other.a_;
+    delete[] data_;
+    data_ = other.data_;
     size_ = other.size_;
     capacity_ = other.capacity_;
 
-    other.a_ = nullptr;
+    other.data_ = nullptr;
     other.size_ = 0;
     other.capacity_ = 0;
   }
@@ -136,9 +136,9 @@ Vector& Vector::operator=(Vector&& other) {
 }
 
 int& Vector::operator[](size_t i) {
-  return a_[i];
+  return data_[i];
 }
 
 const int& Vector::operator[](size_t i) const {
-  return a_[i];
+  return data_[i];
 }

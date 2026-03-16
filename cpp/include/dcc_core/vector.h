@@ -2,7 +2,7 @@
 #define DCC_CORE_VECTOR_H
 
 class Vector {
-  int* a_ = nullptr;
+  int* data_ = nullptr;
   size_t size_ = 0;
   size_t capacity_ = 10;
   int* GetInitializedArray(size_t capacity) const;
