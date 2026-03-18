@@ -75,17 +75,8 @@ void Vector::Print() const {
   std::cout << std::endl;
 }
 
-void Vector::PushBack(int elem) {
-  if (size_ == capacity_) {
-    capacity_ *= 2;
-    int* tmp = GetInitializedArray(capacity_);
-    for (size_t i=0 ; i<size_ ; ++i) {
-      tmp[i] = data_[i];
-    }
-    delete[] data_;
-    data_ = tmp;
-  }
-  data_[size_++] = elem;
+size_t Vector::Size() const {
+  return size_;
 }
 
 void Vector::Resize(size_t size) {
@@ -103,8 +94,9 @@ void Vector::Resize(size_t size) {
   size_ = size;
 }
 
-size_t Vector::Size() const {
-  return size_;
+void Vector::PushBack(int elem) {
+  Resize(size_ + 1);
+  data_[size_ - 1] = elem;
 }
 
 Vector& Vector::operator=(const Vector& other) {

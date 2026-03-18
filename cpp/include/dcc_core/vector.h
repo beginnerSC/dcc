@@ -28,9 +28,9 @@ public:
   Iterator begin() const;
   Iterator end() const;
   void Print() const;
-  void PushBack(int elem);
-  void Resize(size_t size);
   size_t Size() const;
+  void Resize(size_t size);
+  void PushBack(int elem);
   Vector& operator=(const Vector& other);
   Vector& operator=(Vector&& other);
   int& operator[](size_t i);                // called when the Vector object is not const

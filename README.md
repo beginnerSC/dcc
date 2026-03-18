@@ -65,9 +65,9 @@
 * begin
 * end
 * Print
-* PushBack
-* Resize
 * Size
+* Resize
+* PushBack
 * Copy assignment
 * Move assignment
 * operator[]
