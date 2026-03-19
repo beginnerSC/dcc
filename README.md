@@ -47,6 +47,13 @@
 * TODO: jupyter notebook demo, sphinx docs
 * TODO: Is `.vscode/c_cpp_properties.json` needed in order for IntelliSense to work properly? That's not the case for dlc
 * TODO: After poetry upgrade, run `poetry config --migrate` to fix `pyproject.toml` for broken projects
+* TODO: Add test case and set up a sanitizer build target in CMake so that below will break due to out-of-bound read (UB). Compile with the sanitizer flag `ASan` (AddressSanitizer) and the build will error out on out-of-bound read
+```cpp
+void Vector::PushBack(int elem) {
+  Resize(++size_);
+  data_[size_ - 1] = elem;
+}
+```
 
 ## List of Vector's Member Functions
 
