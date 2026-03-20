@@ -120,4 +120,4 @@ v.PushBack(11);  // size_ (10) == capacity_ (10), so:
 // Now it.ptr_ still points to the OLD deleted array!
 std::cout << *it;  // Undefined behavior! Crashes or garbage value
 ```
-* I keep forgetting `delete[] data_` in move assignment!
+* I keep forgetting `delete[] data_` in move assignment! 
