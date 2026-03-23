@@ -7,6 +7,26 @@
 
 ## vcpkg + GoogleTest
 
+### Quick Setup (Automated Scripts)
+
+**For Linux:**
+```bash
+./setup-vcpkg.sh
+source ~/.bashrc  # Apply environment changes
+```
+
+**For Windows:**
+```cmd
+setup-vcpkg.bat
+```
+
+The scripts will automatically:
+- Clone vcpkg
+- Bootstrap vcpkg
+- Set up the VCPKG_ROOT environment variable
+- Initialize vcpkg for the project
+
+### Windows Setup (Manual)
 * [One time initial vcpkg setup](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started?pivots=shell-cmd)
     * `git clone https://github.com/microsoft/vcpkg.git`
     * `cd vcpkg && bootstrap-vcpkg.bat`
@@ -16,6 +36,18 @@
         * In `vcpkg-configuration.json`, the `baseline` in `default-registry` is the HEAD commit of the vcpkg registry at the time running `vcpkg new --application`
     * The `CMakePresets.json` in this guide has `"generator": "Ninja",` which should be replaced by the default generator in the current platform
         * `cmake --help` to check
+
+### Linux Setup (Manual)
+* Install vcpkg:
+    1. Clone the repository: `git clone https://github.com/Microsoft/vcpkg.git ~/vcpkg`
+    2. Bootstrap vcpkg: `cd ~/vcpkg && ./bootstrap-vcpkg.sh`
+    3. Set the VCPKG_ROOT environment variable: `export VCPKG_ROOT=~/vcpkg`
+    4. Add to your shell profile for persistence: `echo 'export VCPKG_ROOT=~/vcpkg' >> ~/.bashrc`
+    5. Reload your shell: `source ~/.bashrc`
+* In project root, initialize vcpkg for the application: `~/vcpkg/vcpkg new --application`
+    * This updates `vcpkg-configuration.json` with the current baseline.
+* The CMake preset "vcpkg-linux" uses "Unix Makefiles" generator, which is suitable for Linux. If you prefer Ninja, install it (`sudo apt install ninja-build`) and update the preset accordingly.
+
 * To configure cmake and build and run gtest: 
     * Run `cnb` if not using VS Code,
         * Comment out `cmake --preset=vcpkg` to skip repeated config step
