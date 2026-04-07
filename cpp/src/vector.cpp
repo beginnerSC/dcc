@@ -10,7 +10,7 @@ int* Vector::GetInitializedArray(size_t capacity) const {
 }
 
 Vector::Vector(size_t size) : size_(size) {
-  while (size_ > capacity_) {
+  while (capacity_ < size_) {
     capacity_ *= 2;
   }
   data_ = GetInitializedArray(capacity_);
@@ -80,8 +80,8 @@ size_t Vector::Size() const {
 }
 
 void Vector::Resize(size_t size) {
-  if (size > capacity_) {
-    while (size > capacity_) {
+  if (capacity_ < size) {
+    while (capacity_ < size) {
       capacity_ *= 2;
     }
     int* tmp = GetInitializedArray(capacity_);
