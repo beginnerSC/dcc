@@ -47,7 +47,7 @@ Vector::Iterator& Vector::Iterator::operator++() {
 }
 
 Vector::Iterator Vector::Iterator::operator++(int) {
-  Iterator tmp = *this;
+  Iterator tmp = *this;     // compiler is already inside Vector::Iterator's scope so no need to say Vector::Iterator tmp. Same for line 55
   ++(*this);
   return tmp;
 }
