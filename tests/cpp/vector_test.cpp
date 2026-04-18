@@ -27,6 +27,24 @@ TEST(VectorConstructorTest, SizedConstructorWithLargeSize) {
   EXPECT_EQ(v.Size(), 100);
 }
 
+TEST(VectorConstructorTest, SizedConstructorInitializesAllElementsWhenMultipleGrowthStepsAreNeeded) {
+  Vector v(21);  // 10 -> 20 -> 40 capacity growth is required.
+  EXPECT_EQ(v.Size(), 21);
+
+  for (size_t i = 0; i < v.Size(); ++i) {
+    EXPECT_EQ(v[i], 0);
+  }
+}
+
+TEST(VectorConstructorTest, SizedConstructorHandlesLargeSizeWithZeroInitialization) {
+  Vector v(100);  // 10 -> 20 -> 40 -> 80 -> 160 capacity growth is required.
+  EXPECT_EQ(v.Size(), 100);
+
+  for (size_t i = 0; i < v.Size(); ++i) {
+    EXPECT_EQ(v[i], 0);
+  }
+}
+
 // TEST(VectorConstructorTest, SizedConstructorThrowsOnNegativeSize) {
 //   EXPECT_THROW(Vector(-5), std::invalid_argument);
 // }
