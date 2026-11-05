@@ -28,5 +28,5 @@ public:
 };
 
 int main() {
-    std::cout << "Hey!" << std::endl;
+    std::cout << "Hey aaa!" << std::endl;
 }

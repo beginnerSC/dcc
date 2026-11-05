@@ -9,7 +9,7 @@
                 "/nologo",
                 "/EHsc",
                 "/Zi",
-                "/std:c++23",
+                "/std:c++latest",
                 "${file}",
                 "/Fe:${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
