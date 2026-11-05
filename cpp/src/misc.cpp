@@ -8,10 +8,10 @@ public:
     Matrix(std::size_t rows, std::size_t cols) : cols_(cols), rows_(rows) {
         data_ = std::vector<std::vector<double>>(cols_, std::vector<double>(rows_, 0));
     }
-    Matrix(const Matrix& other) : data_(other.data_), col_(other.col_), row_(other.row_) {}
-    Matrix(Matrix&& other) : data_(std::move(ther.data_)), col_(other.col_), row_(other.row_) noexcept {}
-    Matrix& operator=(const Matrix& other) {};
-    Matrix& operator=(Matrix&& other) noexcept {};
+    Matrix(const Matrix& other) : data_(other.data_), cols_(other.cols_), rows_(other.rows_) {}
+    Matrix(Matrix&& other) : data_(std::move(other.data_)), cols_(other.cols_), rows_(other.rows_) {}
+    Matrix& operator=(const Matrix& other) {}
+    Matrix& operator=(Matrix&& other) {}
     double& operator()(std::size_t i, std::size_t j) {
         return data_[i][j];
     }
