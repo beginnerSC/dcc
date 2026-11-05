@@ -4,17 +4,26 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-    {
-        "name": "C++ Launch (Windows)",
-        "type": "cppvsdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/build/tests/cpp/Debug/dcc_core_test.exe",
-        // "args": [],
-        "stopAtEntry": false,
-        // "preLaunchTask": "CMake: config and build",
-        "preLaunchTask": "CMake: build (Debug)",
-        "cwd": "${workspaceFolder}",
-        // "environment": [],
-    }
+        {
+            "name": "Run current C++ file",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "cwd": "${fileDirname}",
+            "preLaunchTask": "C/C++: cl.exe build active file",
+            "externalConsole": false
+        }, 
+        {
+            "name": "C++ Launch (Windows)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/tests/cpp/Debug/dcc_core_test.exe",
+            // "args": [],
+            "stopAtEntry": false,
+            // "preLaunchTask": "CMake: config and build",
+            "preLaunchTask": "CMake: build (Debug)",
+            "cwd": "${workspaceFolder}",
+            // "environment": [],
+        }
     ]
 }

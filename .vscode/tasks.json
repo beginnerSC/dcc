@@ -2,6 +2,20 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "C/C++: cl.exe build active file",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/nologo",
+                "/EHsc",
+                "/Zi",
+                "/std:c++23",
+                "${file}",
+                "/Fe:${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "problemMatcher": ["$msCompile"]
+        }, 
+        {
             "label": "CMake: build (Debug)",
             "type": "shell",
             "command": "cmake",
