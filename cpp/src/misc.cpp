@@ -1,6 +1,3 @@
-#ifndef DCC_CORE_DENSE_MATRIX_H
-#define DCC_CORE_DENSE_MATRIX_H
-
 #include <vector>
 
 class Matrix {
@@ -28,5 +25,3 @@ public:
         return cols_;
     }
 };
-
-#endif
