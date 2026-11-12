@@ -46,5 +46,8 @@ public:
 };
 
 int main() {
-    std::cout << "Hey aaa!" << std::endl;
+    Matrix a(3, 4);
+    Matrix b(std::move(a));
+
+    std::cout << a.rows() << ", " << a.cols();
 }
