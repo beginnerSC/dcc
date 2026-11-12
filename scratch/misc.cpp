@@ -1,4 +1,5 @@
 #include <vector>
+#include <utility>
 #include <iostream>
 
 class Matrix {
@@ -11,8 +12,25 @@ public:
     }
     Matrix(const Matrix& other) : data_(other.data_), cols_(other.cols_), rows_(other.rows_) {}
     Matrix(Matrix&& other) : data_(std::move(other.data_)), cols_(other.cols_), rows_(other.rows_) {}
-    Matrix& operator=(const Matrix& other) {}
-    Matrix& operator=(Matrix&& other) {}
+    Matrix& operator=(const Matrix& other) {
+        if (this != &other) {
+            data_ = other.data_;
+            cols_ = other.cols_;
+            rows_ = other.rows_;
+        }
+        return *this;
+    }
+    Matrix& operator=(Matrix&& other) {
+        if (this != &other) {
+            data_ = std::move(other.data_);
+            cols_ = other.cols_;
+            rows_ = other.rows_; 
+
+            other.cols_ = 0;
+            other.rows_ = 0;
+        }
+        return *this;
+    }
     double& operator()(std::size_t i, std::size_t j) {
         return data_[i][j];
     }
